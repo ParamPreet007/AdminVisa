@@ -8,15 +8,17 @@ import CommonInput from "../../component/CommonInput"
 import CommonPassword from "../../component/CommonPassword"
 import CommonButton from "../../component/CommonButton"
 import "../../style/Login.css"
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
-
+const navigate = useNavigate()
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -190,14 +192,19 @@ const LoginPage = () => {
                 </Form.Item>
 
                 {/* Remember Me & Forgot Password */}
-                <motion.div className="form-options" variants={itemVariants}>
+                <motion.div className="form-options" variants={itemVariants}
+                onClick={()=>{
+                  navigate("/forget-password")
+                }}
+                
+                >
                   <label className="remember-me">
                     <input type="checkbox" className="checkbox" />
                     <span className="checkbox-label">Remember me</span>
                   </label>
-                  <motion.a href="/forgot-password" className="forgot-password" whileHover={{ scale: 1.05 }}>
+                  {/* <motion.a href="/forgot-password" className="forgot-password" whileHover={{ scale: 1.05 }}> */}
                     Forgot password?
-                  </motion.a>
+                  {/* </motion.a> */}
                 </motion.div>
 
                 {/* Submit Button */}
@@ -232,9 +239,9 @@ const LoginPage = () => {
         <p className="footer-text">
           Copyright & Developed By{" "}
           <motion.a href="https://techabet.com/" className="footer-link" whileHover={{ scale: 1.05 }}>
-            CyberVision
+            Viza verify
           </motion.a>{" "}
-          © 2024
+          © 2025
         </p>
       </motion.div>
     </div>
