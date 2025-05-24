@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import { Form, message } from "antd"
@@ -9,6 +9,7 @@ import CommonPassword from "../../component/CommonPassword"
 import CommonButton from "../../component/CommonButton"
 import "../../style/Login.css"
 import { useNavigate } from 'react-router-dom';
+import { LeftSideContent } from "../../component/LeftSideContent"
 
 const LoginPage = () => {
   
@@ -107,37 +108,7 @@ const navigate = useNavigate()
       <motion.div className="main-content" variants={containerVariants} initial="hidden" animate="visible">
         <div className="content-grid">
           {/* Left Side - Welcome Content */}
-          <motion.div className="welcome-section" variants={itemVariants}>
-            <motion.div className="welcome-content" variants={itemVariants}>
-              <div className="brand-header">
-                <motion.div className="brand-icon" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
-                  <StarOutlined className="brand-icon-svg" />
-                </motion.div>
-                <h1 className="brand-title">Visa Verify</h1>
-              </div>
-
-              <motion.h2 className="welcome-title" variants={itemVariants}>
-                Welcome back to the future
-              </motion.h2>
-
-              <motion.p className="welcome-description" variants={itemVariants}>
-                Experience next-generation technology with our cutting-edge platform. Your journey into innovation
-                starts here.
-              </motion.p>
-            </motion.div>
-
-            <motion.div className="features-grid" variants={itemVariants}>
-              <motion.div className="feature-card" whileHover={{ scale: 1.05, y: -5 }} transition={{ duration: 0.3 }}>
-                <h3 className="feature-title">🔒 Secure Access</h3>
-                <p className="feature-description">Advanced encryption and security protocols</p>
-              </motion.div>
-
-              <motion.div className="feature-card" whileHover={{ scale: 1.05, y: -5 }} transition={{ duration: 0.3 }}>
-                <h3 className="feature-title">⚡ Real-time Sync</h3>
-                <p className="feature-description">Instant updates across all your devices</p>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+         <LeftSideContent/>
 
           {/* Right Side - Login Form */}
           <motion.div className="form-section" variants={itemVariants}>
@@ -148,7 +119,7 @@ const navigate = useNavigate()
                   <UserOutlined className="form-icon-svg" />
                 </motion.div>
                 <h2 className="form-title">Welcome Back</h2>
-                <p className="form-description">Sign in to your account to continue</p>
+                <p className="form-description">Sign into your account to continue</p>
               </motion.div>
 
               {/* Form */}
@@ -198,10 +169,7 @@ const navigate = useNavigate()
                 }}
                 
                 >
-                  <label className="remember-me">
-                    <input type="checkbox" className="checkbox" />
-                    <span className="checkbox-label">Remember me</span>
-                  </label>
+                
                   {/* <motion.a href="/forgot-password" className="forgot-password" whileHover={{ scale: 1.05 }}> */}
                     Forgot password?
                   {/* </motion.a> */}

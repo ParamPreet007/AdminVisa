@@ -7,6 +7,7 @@ import { MailOutlined, LockOutlined, UserOutlined, StarOutlined } from "@ant-des
 import CommonInput from "../../component/CommonInput"
 import CommonButton from "../../component/CommonButton"
 import "../../style/Login.css"
+import { LeftSideContent } from "../../component/LeftSideContent"
 
 const ForgetPassword = () => {
   const [form] = Form.useForm()
@@ -96,24 +97,7 @@ const ForgetPassword = () => {
       <motion.div className="main-content" variants={containerVariants} initial="hidden" animate="visible">
         <div className="content-grid">
           {/* Left Side - Welcome Content */}
-          <motion.div className="welcome-section" variants={itemVariants}>
-            <motion.div className="welcome-content" variants={itemVariants}>
-              <div className="brand-header">
-                <motion.div className="brand-icon" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
-                  <StarOutlined className="brand-icon-svg" />
-                </motion.div>
-                <h1 className="brand-title">Visa Verify</h1>
-              </div>
-
-              <motion.h2 className="welcome-title" variants={itemVariants}>
-                Don't worry just write email here
-              </motion.h2>
-
-            
-            </motion.div>
-
-           
-          </motion.div>
+         <LeftSideContent/>
 
           {/* Right Side - Login Form */}
           <motion.div className="form-section" variants={itemVariants}>
