@@ -151,7 +151,7 @@ const ForgetPassword = () => {
                 {/* Submit Button */}
                 <Form.Item>
                   <CommonButton type="primary" loading={loading} htmlType="submit">
-                    {loading ? "Signing in..." : "Sign In"}
+                    {loading ? "Signing in..." : "Send OTP"}
                   </CommonButton>
                 </Form.Item>
 

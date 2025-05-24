@@ -192,7 +192,7 @@ const navigate = useNavigate()
                 </Form.Item>
 
                 {/* Remember Me & Forgot Password */}
-                <motion.div className="form-options" variants={itemVariants}
+                <motion.div className="form-options text-blue-500 cursor-pointer" variants={itemVariants}
                 onClick={()=>{
                   navigate("/forget-password")
                 }}
