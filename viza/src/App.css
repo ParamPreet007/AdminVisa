@@ -1,38 +1,198 @@
-.App {
-  text-align: center;
+.button-wrapper {
+  width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
+.common-button {
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.common-button.primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.common-button.primary:hover:not(.disabled) {
+  background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.common-button.secondary {
+  background: white;
+  color: #8b5cf6;
+  border: 2px solid #8b5cf6;
+}
+
+.common-button.secondary:hover:not(.disabled) {
+  background: #f3f4f6;
+  border-color: #7c3aed;
+}
+
+.common-button.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.button-text {
+  font-size: 16px;
+}
+
+.common-button .ant-btn-loading-icon {
+  margin-right: 8px;
+}
+.common-input-container {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  z-index: 10;
+  color: #9ca3af;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.common-input {
+  width: 100%;
+  height: 48px;
+  padding: 12px 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  outline: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.common-input.with-icon {
+  padding-left: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+.common-input:hover {
+  border-color: #a855f7;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.common-input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+.common-input.error {
+  border-color: #ef4444;
+}
+
+.common-input.error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #ef4444;
+}
+.common-password-container {
+  width: 100%;
+}
+
+.password-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  z-index: 10;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.common-password {
+  width: 100%;
+  height: 48px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.common-password .ant-input {
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+}
+
+.common-password.with-icon .ant-input {
+  padding-left: 40px;
+}
+
+.common-password:hover {
+  border-color: #a855f7;
+}
+
+.common-password:focus-within {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+.common-password.error {
+  border-color: #ef4444;
+}
+
+.common-password.error:focus-within {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.eye-icon {
+  color: #9ca3af;
+}
+
+.error-message {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #ef4444;
 }
