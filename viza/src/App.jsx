@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AuthForget from "./pages/authForget/AuthForget";
 import LoginPage from "./pages/login/Login";
 import AppLayout from "./layout/Layout";
+import VisaLandingPage from "./pages/userPage/UserPage";
 
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forget-password" element={<AuthForget />} />
-      {/* <Route path="*" element={<AppLayout />} /> */}
+      <Route path="/user-page" element={<VisaLandingPage/>}/>
+      <Route path="*" element={<AppLayout />} />
 
     </Routes>
    
