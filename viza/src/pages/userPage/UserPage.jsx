@@ -8,6 +8,274 @@ export default function VisaLandingPage() {
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [isCountryModalOpen, setIsCountryModalOpen] = useState(false)
+
+  const countryDetails = {
+    USA: {
+      name: "United States of America",
+      flag: "🇺🇸",
+      description: "The land of opportunities with world-class education and career prospects.",
+      visaTypes: [
+        {
+          type: "H-1B Work Visa",
+          duration: "3 years",
+          requirements: "Bachelor's degree + job offer",
+          processingTime: "6-8 months",
+        },
+        {
+          type: "F-1 Student Visa",
+          duration: "Course duration",
+          requirements: "University admission + financial proof",
+          processingTime: "2-3 months",
+        },
+        {
+          type: "B-1/B-2 Tourist Visa",
+          duration: "6 months",
+          requirements: "Travel itinerary + financial stability",
+          processingTime: "2-4 weeks",
+        },
+      ],
+      requirements: [
+        "Valid passport (6+ months validity)",
+        "Completed DS-160 form",
+        "Visa application fee payment",
+        "Passport-style photograph",
+        "Supporting documents based on visa type",
+      ],
+      processingFee: "$185 - $405",
+      successRate: "92%",
+      popularCities: ["New York", "Los Angeles", "San Francisco", "Chicago", "Boston"],
+      benefits: [
+        "World's largest economy",
+        "Top-ranked universities",
+        "Diverse job opportunities",
+        "Innovation hub",
+        "Cultural diversity",
+      ],
+    },
+    Canada: {
+      name: "Canada",
+      flag: "🇨🇦",
+      description: "A welcoming nation known for its quality of life and immigration-friendly policies.",
+      visaTypes: [
+        {
+          type: "Express Entry",
+          duration: "Permanent",
+          requirements: "Points-based system",
+          processingTime: "6 months",
+        },
+        {
+          type: "Study Permit",
+          duration: "Course duration",
+          requirements: "University admission + funds",
+          processingTime: "4-6 weeks",
+        },
+        {
+          type: "Visitor Visa",
+          duration: "6 months",
+          requirements: "Travel purpose + ties to home country",
+          processingTime: "2-4 weeks",
+        },
+      ],
+      requirements: [
+        "Valid passport",
+        "Language proficiency (IELTS/CELPIP)",
+        "Educational credential assessment",
+        "Medical examination",
+        "Police clearance certificate",
+      ],
+      processingFee: "CAD $150 - $1,325",
+      successRate: "95%",
+      popularCities: ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa"],
+      benefits: [
+        "Universal healthcare",
+        "High quality of life",
+        "Multicultural society",
+        "Strong economy",
+        "Path to citizenship",
+      ],
+    },
+    Australia: {
+      name: "Australia",
+      flag: "🇦🇺",
+      description: "A dynamic country offering excellent work-life balance and world-class education.",
+      visaTypes: [
+        {
+          type: "Skilled Independent Visa",
+          duration: "Permanent",
+          requirements: "Skills assessment + points test",
+          processingTime: "8-12 months",
+        },
+        {
+          type: "Student Visa",
+          duration: "Course duration",
+          requirements: "University enrollment + GTE",
+          processingTime: "4-6 weeks",
+        },
+        {
+          type: "Tourist Visa",
+          duration: "12 months",
+          requirements: "Tourism purpose + sufficient funds",
+          processingTime: "1-4 weeks",
+        },
+      ],
+      requirements: [
+        "Valid passport",
+        "English proficiency (IELTS/PTE)",
+        "Skills assessment",
+        "Health insurance",
+        "Character requirements",
+      ],
+      processingFee: "AUD $370 - $4,240",
+      successRate: "89%",
+      popularCities: ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
+      benefits: [
+        "High standard of living",
+        "Beautiful landscapes",
+        "Strong job market",
+        "Excellent education system",
+        "Work-life balance",
+      ],
+    },
+    UK: {
+      name: "United Kingdom",
+      flag: "🇬🇧",
+      description: "Historic nation with prestigious universities and rich cultural heritage.",
+      visaTypes: [
+        {
+          type: "Skilled Worker Visa",
+          duration: "5 years",
+          requirements: "Job offer + sponsorship",
+          processingTime: "3-8 weeks",
+        },
+        {
+          type: "Student Visa",
+          duration: "Course duration",
+          requirements: "University acceptance + funds",
+          processingTime: "3-6 weeks",
+        },
+        {
+          type: "Standard Visitor Visa",
+          duration: "6 months",
+          requirements: "Tourism/business purpose",
+          processingTime: "3-6 weeks",
+        },
+      ],
+      requirements: [
+        "Valid passport",
+        "English language requirement",
+        "Tuberculosis test (if applicable)",
+        "Financial requirements",
+        "Maintenance funds",
+      ],
+      processingFee: "£95 - £1,423",
+      successRate: "87%",
+      popularCities: ["London", "Manchester", "Edinburgh", "Birmingham", "Liverpool"],
+      benefits: [
+        "World-renowned universities",
+        "Rich history and culture",
+        "Gateway to Europe",
+        "Strong economy",
+        "English-speaking country",
+      ],
+    },
+    Germany: {
+      name: "Germany",
+      flag: "🇩🇪",
+      description: "Europe's economic powerhouse with excellent opportunities for skilled professionals.",
+      visaTypes: [
+        {
+          type: "EU Blue Card",
+          duration: "4 years",
+          requirements: "University degree + job offer",
+          processingTime: "2-3 months",
+        },
+        {
+          type: "Student Visa",
+          duration: "Course duration",
+          requirements: "University admission + blocked account",
+          processingTime: "6-12 weeks",
+        },
+        {
+          type: "Business Visa",
+          duration: "90 days",
+          requirements: "Business invitation + funds",
+          processingTime: "2-4 weeks",
+        },
+      ],
+      requirements: [
+        "Valid passport",
+        "German language proficiency (A1-B2)",
+        "University degree recognition",
+        "Health insurance",
+        "Financial proof",
+      ],
+      processingFee: "€75 - €140",
+      successRate: "91%",
+      popularCities: ["Berlin", "Munich", "Frankfurt", "Hamburg", "Cologne"],
+      benefits: [
+        "Strong economy",
+        "Free/low-cost education",
+        "Central location in Europe",
+        "High quality of life",
+        "Innovation and technology hub",
+      ],
+    },
+    "New Zealand": {
+      name: "New Zealand",
+      flag: "🇳🇿",
+      description: "Beautiful island nation known for its natural beauty and friendly people.",
+      visaTypes: [
+        {
+          type: "Skilled Migrant Visa",
+          duration: "Permanent",
+          requirements: "Points-based system",
+          processingTime: "6-12 months",
+        },
+        {
+          type: "Student Visa",
+          duration: "Course duration",
+          requirements: "University enrollment + funds",
+          processingTime: "4-6 weeks",
+        },
+        {
+          type: "Visitor Visa",
+          duration: "9 months",
+          requirements: "Tourism purpose + return ticket",
+          processingTime: "2-4 weeks",
+        },
+      ],
+      requirements: [
+        "Valid passport",
+        "English proficiency",
+        "Health and character requirements",
+        "Sufficient funds",
+        "Return ticket (for visitors)",
+      ],
+      processingFee: "NZD $208 - $3,310",
+      successRate: "93%",
+      popularCities: ["Auckland", "Wellington", "Christchurch", "Hamilton", "Dunedin"],
+      benefits: [
+        "Stunning natural beauty",
+        "Safe and peaceful",
+        "Work-life balance",
+        "Adventure activities",
+        "English-speaking country",
+      ],
+    },
+  }
+
+  const openCountryModal = (countryName) => {
+    setSelectedCountry(countryDetails[countryName])
+    setIsCountryModalOpen(true)
+  }
+
+  const closeCountryModal = () => {
+    setIsCountryModalOpen(false)
+    setSelectedCountry(null)
+  }
+
   useEffect(() => {
     setIsVisible(true)
     const interval = setInterval(() => {
@@ -186,7 +454,11 @@ export default function VisaLandingPage() {
               dreams into reality with our proven success rate.
             </p>
 
-         
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-up-stagger">
+          
+             
+            </div>
+
             {/* Animated Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
               {stats.map((stat, index) => (
@@ -242,7 +514,10 @@ export default function VisaLandingPage() {
                       </span>
                     ))}
                   </div>
-                  <button className="mt-4 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-button-glow">
+                  <button
+                    onClick={() => openCountryModal(country.name)}
+                    className="mt-4 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-button-glow"
+                  >
                     Learn More
                   </button>
                 </div>
@@ -290,7 +565,7 @@ export default function VisaLandingPage() {
                     </li>
                   ))}
                 </ul>
-               
+              
               </div>
             ))}
           </div>
@@ -407,7 +682,7 @@ export default function VisaLandingPage() {
             Join thousands of successful applicants who trusted us with their visa applications
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-cta-buttons">
-            
+           
             <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 animate-button-glow-white">
               Call Now: 8968248709
             </button>
@@ -447,17 +722,156 @@ export default function VisaLandingPage() {
             <div className="animate-fade-in-right" style={{ animationDelay: "600ms" }}>
               <h3 className="text-lg font-semibold mb-4">Contact</h3>
               <ul className="space-y-2 text-gray-400">
-                <li className="hover:text-white transition-colors duration-300">+1-800-VISA-PRO</li>
-                <li className="hover:text-white transition-colors duration-300">info@globalvisapro.com</li>
+                <li className="hover:text-white transition-colors duration-300">8968248709</li>
+                <li className="hover:text-white transition-colors duration-300">paramsinghmalout.com</li>
                 <li className="hover:text-white transition-colors duration-300">24/7 Support</li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 animate-fade-in">
-            <p>&copy; 2024 GlobalVisa Pro. All rights reserved.</p>
+            <p>&copy; 2025 Visa Verify Pro. All rights reserved.</p>
           </div>
         </div>
       </footer>
+
+      {/* Country Details Modal */}
+      {isCountryModalOpen && selectedCountry && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-modal-slide-up">
+            {/* Modal Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-2xl">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-4">
+                  <span className="text-6xl">{selectedCountry.flag}</span>
+                  <div>
+                    <h2 className="text-3xl font-bold">{selectedCountry.name}</h2>
+                    <p className="text-blue-100 mt-2">{selectedCountry.description}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={closeCountryModal}
+                  className="text-white hover:text-gray-200 transition-colors duration-300"
+                >
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div className="bg-blue-50 p-4 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-blue-600">{selectedCountry.successRate}</div>
+                  <div className="text-gray-600 text-sm">Success Rate</div>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-green-600">{selectedCountry.processingFee}</div>
+                  <div className="text-gray-600 text-sm">Processing Fee</div>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-purple-600">{selectedCountry.visaTypes.length}</div>
+                  <div className="text-gray-600 text-sm">Visa Types</div>
+                </div>
+                <div className="bg-yellow-50 p-4 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-yellow-600">{selectedCountry.popularCities.length}</div>
+                  <div className="text-gray-600 text-sm">Major Cities</div>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Visa Types */}
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    <span className="mr-2">📋</span> Available Visa Types
+                  </h3>
+                  <div className="space-y-4">
+                    {selectedCountry.visaTypes.map((visa, index) => (
+                      <div key={index} className="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        <h4 className="font-bold text-gray-800">{visa.type}</h4>
+                        <div className="grid grid-cols-1 gap-2 mt-2 text-sm text-gray-600">
+                          <div>
+                            <strong>Duration:</strong> {visa.duration}
+                          </div>
+                          <div>
+                            <strong>Requirements:</strong> {visa.requirements}
+                          </div>
+                          <div>
+                            <strong>Processing Time:</strong> {visa.processingTime}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Requirements & Benefits */}
+                <div className="space-y-6">
+                  {/* General Requirements */}
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                      <span className="mr-2">📄</span> General Requirements
+                    </h3>
+                    <ul className="space-y-2">
+                      {selectedCountry.requirements.map((req, index) => (
+                        <li key={index} className="flex items-center text-gray-700">
+                          <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                          {req}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Benefits */}
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                      <span className="mr-2">⭐</span> Key Benefits
+                    </h3>
+                    <ul className="space-y-2">
+                      {selectedCountry.benefits.map((benefit, index) => (
+                        <li key={index} className="flex items-center text-gray-700">
+                          <Star className="w-5 h-5 text-yellow-500 mr-3 flex-shrink-0" />
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Popular Cities */}
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                      <span className="mr-2">🏙️</span> Popular Cities
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedCountry.popularCities.map((city, index) => (
+                        <span
+                          key={index}
+                          className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
+                        >
+                          {city}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-gray-200">
+               
+                <button
+                  onClick={closeCountryModal}
+                  className="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-300 transition-all duration-300"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         /* Custom Animations */
@@ -465,256 +879,269 @@ export default function VisaLandingPage() {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-20px) rotate(5deg); }
         }
-        
+
         @keyframes float-reverse {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(20px) rotate(-5deg); }
         }
-        
+
         @keyframes bounce-slow {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
         }
-        
+
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        
+
         @keyframes wiggle {
           0%, 100% { transform: rotate(0deg); }
           25% { transform: rotate(5deg); }
           75% { transform: rotate(-5deg); }
         }
-        
+
         @keyframes slide-down {
           from { transform: translateY(-100%); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes fade-in-left {
           from { transform: translateX(-50px); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-        
+
         @keyframes fade-in-right {
           from { transform: translateX(50px); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-        
+
         @keyframes zoom-in {
           from { transform: scale(0.5); opacity: 0; }
           to { transform: scale(1); opacity: 1; }
         }
-        
+
         @keyframes gradient {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-        
+
         @keyframes slide-up-delayed {
           from { transform: translateY(50px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes fade-in-up-slow {
           from { transform: translateY(30px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes slide-up-stagger {
           from { transform: translateY(40px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes bounce-gentle {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-5px); }
         }
-        
+
         @keyframes slide-right {
           0%, 100% { transform: translateX(0); }
           50% { transform: translateX(5px); }
         }
-        
+
         @keyframes fade-in-delayed {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-        
+
         @keyframes count-up {
           from { transform: translateY(20px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes number-roll {
           from { transform: rotateX(90deg); }
           to { transform: rotateX(0deg); }
         }
-        
+
         @keyframes fade-in-up {
           from { transform: translateY(10px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes slide-in-left {
           from { transform: translateX(-30px); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-        
+
         @keyframes slide-in-right {
           from { transform: translateX(30px); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-        
+
         @keyframes card-slide-up {
           from { transform: translateY(50px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes spin-once {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        
+
         @keyframes tag-appear {
           from { transform: scale(0); opacity: 0; }
           to { transform: scale(1); opacity: 1; }
         }
-        
+
         @keyframes button-glow {
           0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
           50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
         }
-        
+
         @keyframes text-reveal {
           from { transform: translateY(100%); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes service-card {
           from { transform: translateY(60px) rotateY(45deg); opacity: 0; }
           to { transform: translateY(0) rotateY(0deg); opacity: 1; }
         }
-        
+
         @keyframes icon-bounce {
           0%, 100% { transform: translateY(0) scale(1); }
           50% { transform: translateY(-5px) scale(1.1); }
         }
-        
+
         @keyframes check-mark {
           from { transform: scale(0) rotate(0deg); }
           to { transform: scale(1) rotate(360deg); }
         }
-        
+
         @keyframes list-item {
           from { transform: translateX(-20px); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-        
+
         @keyframes button-shake {
           0%, 100% { transform: translateX(0); }
           25% { transform: translateX(-2px); }
           75% { transform: translateX(2px); }
         }
-        
+
         @keyframes arrow-bounce {
           0%, 100% { transform: translateX(0); }
           50% { transform: translateX(3px); }
         }
-        
+
         @keyframes process-step {
           from { transform: translateY(50px) scale(0.8); opacity: 0; }
           to { transform: translateY(0) scale(1); opacity: 1; }
         }
-        
+
         @keyframes step-circle {
           from { transform: scale(0) rotate(0deg); }
           to { transform: scale(1) rotate(360deg); }
         }
-        
+
         @keyframes pulse-ring {
           0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
           70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
           100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
-        
+
         @keyframes number-appear {
           from { transform: scale(0); opacity: 0; }
           to { transform: scale(1); opacity: 1; }
         }
-        
+
         @keyframes slide-in {
           from { transform: translateX(-20px); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-        
+
         @keyframes text-glow {
           0%, 100% { text-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
           50% { text-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
         }
-        
+
         @keyframes testimonial-card {
           from { transform: translateY(40px) rotateX(45deg); opacity: 0; }
           to { transform: translateY(0) rotateX(0deg); opacity: 1; }
         }
-        
+
         @keyframes wave {
           0%, 100% { transform: rotate(0deg); }
           25% { transform: rotate(10deg); }
           75% { transform: rotate(-10deg); }
         }
-        
+
         @keyframes star-twinkle {
           0%, 100% { transform: scale(1); opacity: 1; }
           50% { transform: scale(1.2); opacity: 0.8; }
         }
-        
+
         @keyframes text-type {
           from { width: 0; }
           to { width: 100%; }
         }
-        
+
         @keyframes gradient-shift {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-        
+
         @keyframes text-glow-white {
           0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
           50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
         }
-        
+
         @keyframes cta-buttons {
           from { transform: translateY(30px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes button-pulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.05); }
         }
-        
+
         @keyframes button-glow-white {
           0%, 100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
           50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
         }
-        
+
         @keyframes slide-up-footer {
           from { transform: translateY(50px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        
+
         @keyframes pulse-slow {
           0%, 100% { opacity: 0.8; }
           50% { opacity: 1; }
         }
-        
+
         @keyframes pulse-button {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.02); }
+        }
+
+        @keyframes modal-slide-up {
+          from { transform: translateY(50px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-modal-slide-up {
+          animation: modal-slide-up 0.3s ease-out;
+        }
+
+        .animate-fade-in {
+          animation: fade-in-up 0.3s ease-out;
         }
 
         /* Animation Classes */
@@ -727,7 +1154,7 @@ export default function VisaLandingPage() {
         .animate-fade-in-left { animation: fade-in-left 1s ease-out; }
         .animate-fade-in-right { animation: fade-in-right 1s ease-out; }
         .animate-zoom-in { animation: zoom-in 1.2s ease-out; }
-        .animate-gradient { 
+        .animate-gradient {
           background-size: 200% 200%;
           animation: gradient 3s ease infinite;
         }
@@ -763,7 +1190,7 @@ export default function VisaLandingPage() {
         .animate-wave { animation: wave 1s ease-in-out; }
         .animate-star-twinkle { animation: star-twinkle 1s ease-in-out infinite both; }
         .animate-text-type { animation: text-type 2s ease-out; }
-        .animate-gradient-shift { 
+        .animate-gradient-shift {
           background-size: 200% 200%;
           animation: gradient-shift 4s ease infinite;
         }
