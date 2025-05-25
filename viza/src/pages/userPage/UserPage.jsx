@@ -412,7 +412,7 @@ export default function VisaLandingPage() {
             <div className="flex items-center space-x-2 animate-fade-in-left">
               <Globe className="w-8 h-8 text-blue-600 animate-spin-slow" />
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                GlobalVisa Pro
+                Visa Verify
               </span>
             </div>
             <div className="hidden md:flex space-x-8 animate-fade-in-right">
@@ -697,7 +697,7 @@ export default function VisaLandingPage() {
             <div className="animate-fade-in-left">
               <div className="flex items-center space-x-2 mb-4">
                 <Globe className="w-8 h-8 text-blue-400 animate-spin-slow" />
-                <span className="text-2xl font-bold">GlobalVisa Pro</span>
+                <span className="text-2xl font-bold">Visa Verify</span>
               </div>
               <p className="text-gray-400">Your trusted partner for global visa and immigration services.</p>
             </div>
