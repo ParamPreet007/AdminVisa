@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { ChevronRight, Globe, Users, Award, Clock, CheckCircle, ArrowRight, Plane, Star } from "lucide-react"
+import { UserForm } from "./UserForm"
 
 export default function VisaLandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -10,7 +11,7 @@ export default function VisaLandingPage() {
 
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [isCountryModalOpen, setIsCountryModalOpen] = useState(false)
-
+  const [openModal,setOpenModal] = useState(false)
   const countryDetails = {
     USA: {
       name: "United States of America",
@@ -367,6 +368,7 @@ export default function VisaLandingPage() {
   ]
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
       {/* Animated Background with Parallax */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -430,7 +432,9 @@ export default function VisaLandingPage() {
               </a>
              
             </div>
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-pulse-button">
+            <button
+            onClick={()=>setOpenModal(true)}
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-pulse-button">
               Get Started
             </button>
           </div>
@@ -1203,5 +1207,7 @@ export default function VisaLandingPage() {
         .animate-pulse-button { animation: pulse-button 2s ease-in-out infinite; }
       `}</style>
     </div>
+    <UserForm open={openModal} onCancel={()=>setOpenModal(false)} />
+    </>
   )
 }
