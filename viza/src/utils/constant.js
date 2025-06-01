@@ -8,3 +8,7 @@ export const valildateEmailLogin = (_, value) => {
   }
   return Promise.resolve();
 };
+export const WidthandHeightIcon = {
+  width: "18",
+  height: "18",
+};
