@@ -3,8 +3,13 @@
 import { useState, useEffect } from "react"
 import { ChevronRight, Globe, Users, Award, Clock, CheckCircle, ArrowRight, Plane, Star } from "lucide-react"
 import { UserForm } from "./UserForm"
+import StatusCheck from "./StatusCheck"
 
 export default function VisaLandingPage() {
+  const [showStatusModal,setShowStatusModal] = useState({
+    open:false
+  })
+
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -432,11 +437,22 @@ export default function VisaLandingPage() {
               </a>
              
             </div>
+            <div className="flex gap-4">
+
+          
+            <button
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-pulse-button"
+            onClick={()=>{
+              setShowStatusModal({...showStatusModal,open:true})
+            }}
+            > Check status 
+            </button>
             <button
             onClick={()=>setOpenModal(true)}
             className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 animate-pulse-button">
               Get Started
             </button>
+              </div>
           </div>
         </nav>
       </header>
@@ -1208,6 +1224,7 @@ export default function VisaLandingPage() {
       `}</style>
     </div>
     <UserForm open={openModal} onCancel={()=>setOpenModal(false)} />
+      <StatusCheck open={showStatusModal?.open} onCancel={()=>setShowStatusModal({...showStatusModal,open:false})} />
     </>
   )
 }
