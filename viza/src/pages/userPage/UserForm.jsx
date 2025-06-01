@@ -12,6 +12,7 @@ export const UserForm = ({open,onCancel}) => {
 
   const onFinish = async (values) => {
     try {
+      console.log(values,'values here ')
       // Create FormData for file upload
       const formData = new FormData()
 
@@ -80,18 +81,6 @@ export const UserForm = ({open,onCancel}) => {
     return Promise.resolve()
   }
 
-  // File upload validation
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg"
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG files!")
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2
-    if (!isLt2M) {
-      message.error("Image must be smaller than 2MB!")
-    }
-    return false // Prevent auto upload
-  }
 
   // Format Aadhaar number with spaces
   const formatAadhaar = (value) => {
@@ -158,10 +147,6 @@ export const UserForm = ({open,onCancel}) => {
               </Form.Item>
             </Col>
 
-           
-          </Row>
-
-          <Row gutter={16}>
             <Col xs={24} sm={12}>
               <Form.Item
                 label="Father's Name"
@@ -175,6 +160,10 @@ export const UserForm = ({open,onCancel}) => {
                 <Input placeholder="Enter your father's name" />
               </Form.Item>
             </Col>
+          </Row>
+
+          <Row gutter={16}>
+           
 
             <Col xs={24} sm={12}>
               <Form.Item
@@ -254,8 +243,8 @@ export const UserForm = ({open,onCancel}) => {
           <Form.Item style={{ marginTop: "32px" }}>
             <Row gutter={16}>
               <Col xs={24} sm={12}>
-                <Button type="default" size="large" style={{ width: "100%" }} onClick={() => form.resetFields()}>
-                  Reset Form
+                <Button type="default" size="large" style={{ width: "100%" }} onClick={() =>{ form.resetFields();onCancel()}}>
+                  Cancel Form
                 </Button>
               </Col>
               <Col xs={24} sm={12}>
@@ -264,7 +253,14 @@ export const UserForm = ({open,onCancel}) => {
                 </Button>
               </Col>
             </Row>
+
           </Form.Item>
+          <Row gutter={16}>
+            <Col xs={24} sm={12}>
+            
+            
+            </Col>
+          </Row>
         </Form>
       </div>
    </Modal>
