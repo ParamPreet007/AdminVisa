@@ -1,6 +1,6 @@
 
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Form, message } from "antd"
 import { motion } from "framer-motion"
 import { MailOutlined, LockOutlined, UserOutlined, StarOutlined } from "@ant-design/icons"
@@ -69,7 +69,9 @@ const navigate = useNavigate()
       console.log("Form values:", values)
 
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // await new Promise((resolve) => setTimeout(resolve, 2000))
+      localStorage.setItem("token","dummyToekn")
+      navigate("/users")
 
       message.success("Login successful!")
 
@@ -94,6 +96,11 @@ const navigate = useNavigate()
     }
     return Promise.resolve()
   }
+    useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/users");
+    }
+  }, []);
 
   return (
     <div className="login-page">

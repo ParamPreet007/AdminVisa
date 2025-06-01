@@ -12,6 +12,7 @@ import Header from "./Header";
 import SubMenu from "antd/es/menu/SubMenu";
 import PrivateRoute from "../component/PrivatePage";
 import DotIcon from "../assets/SvgElement/DotIcon";
+import Popup from "../component/Popover";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -24,10 +25,13 @@ const AppLayout = () => {
     setSlectedMenu([location?.pathname?.split("/")?.[1]]);
     setSlectedSubMenu([location?.pathname?.split("/")?.[2] || ""]);
   }, [location?.pathname]);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token")) navigate("/login");
+  // }, [authLogin]);
+
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/login");
-  }, [authLogin]);
-
+  }, [localStorage.getItem("token")]);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Layout>
@@ -42,25 +46,7 @@ const AppLayout = () => {
             backgroundColor: "var(--primary)",
           }}
         >
-          {/* <div
-            className="flex font-semibold text-base  h-12  border-r  bg-[var(--headerbg)]"
-            style={{
-              position: "fixed",
-              zIndex: 100,
-              top: 0,
-              width: "241px",
-
-            }}
-          >
-              <>
-                
-                <div className="ml-2 w-48 h-12 text-white flex items-center justify-center text-2xl">
-                  <img src={cyberVison} alt={cyberVison} style={{ width: "100%", height: "100%" }} />
-                </div>
-              
-              </>
-         
-          </div> */}
+        
           <Menu
             className=" m-0 p-2 text-xs mt-12"
             style={{
@@ -110,7 +96,6 @@ const AppLayout = () => {
                           : "var(--primary)",
                       }}
                     >
-                      {!collapsed && (
                         <div
                           className="ml-1"
                           style={{
@@ -137,19 +122,6 @@ const AppLayout = () => {
                             </div>
                           </div>
                         </div>
-                      )}
-                      {collapsed && (
-                        <div
-                          className="mx-2 my-3"
-                          style={{
-                            color: slectedSubMenu.includes(Element.key)
-                              ? "#ffff"
-                              : "#ADAAC2",
-                          }}
-                        >
-                          {Element.name}
-                        </div>
-                      )}
                     </Link>
                   ))}
                 </SubMenu>
@@ -197,7 +169,7 @@ const AppLayout = () => {
             </Routes>
           </Content>
         </Layout>
-        <Popup />
+        <Popup/>
       </Layout>
     </Layout>
   );
