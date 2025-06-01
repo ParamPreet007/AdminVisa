@@ -18,6 +18,8 @@ const Header = () => {
   const logoutAdmin = async () => {
     try {
       dispatch(setPopupLoading(true));
+       localStorage.clear()
+        dispatch(closePopup())
       // const res = await authLogut({ message: true });
       // if (res?.status === 200 || res?.status === 201) {
       //   dispatch(setLogout());
