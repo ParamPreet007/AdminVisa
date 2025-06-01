@@ -1,7 +1,30 @@
+:root {
+  --primary: #4c4c4f;
+  --sub-primary: #f5f3ff;
+  --gray: #797979;
+  --headerbg: #8d8c91;
+  --menuBgcolor: #faf9ff69;
+  --firstStripGraph: #292545;
+  --secondStripGraph: #ef564c;
+  --thirdStripGraph: #f7a45e;
+  --fourthStripGraph: #cdcbe3;
+  --firstStripPie: #202632;
+  --secondStripPie: #ff8446;
+  --thirdStripPie: #fcc604;
+  --fourStripPie: #0891c1;
+  --fifthStripPie: #1cbc9d;
+  --sixStripPie: #ef564c;
+  --designText: #474747;
+  --loginheaderColor:#78787b;
+  --loginBackgroundColor:#8d8c91;
+}
+
 .button-wrapper {
   width: 100%;
 }
-
+.sideScrollBar::-webkit-scrollbar {
+  display: none;
+}
 .common-button {
   width: 100%;
   height: 48px;
