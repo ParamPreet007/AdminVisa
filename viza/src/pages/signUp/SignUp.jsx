@@ -11,7 +11,7 @@ import "../../style/Login.css"
 import { useNavigate } from 'react-router-dom';
 import { LeftSideContent } from "../../component/LeftSideContent"
 
-const LoginPage = () => {
+const SignUpPage = () => {
   
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
@@ -118,12 +118,31 @@ const navigate = useNavigate()
                 <motion.div className="form-icon" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
                   <UserOutlined className="form-icon-svg" />
                 </motion.div>
-                <h2 className="form-title">Welcome Back</h2>
-                <p className="form-description">Sign into your account to continue</p>
+                <h2 className="form-title">Sign Up </h2>
+                <p className="form-description">Sign up your account to continue</p>
               </motion.div>
 
               {/* Form */}
               <Form form={form} onFinish={handleSubmit} layout="vertical" className="login-form">
+             <Form.Item
+                  name="name"
+                  rules={[
+                    {
+                      required: true,
+                      message:"Name is required",
+                    },
+                  ]}
+                >
+                  <CommonInput
+                    label="Name"
+                    placeholder="Enter your name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    icon={<UserOutlined />}
+                  />
+                </Form.Item>
+
                 <Form.Item
                   name="email"
                   rules={[
@@ -169,33 +188,16 @@ const navigate = useNavigate()
                 }}
                 
                 >
-                
-                  {/* <motion.a href="/forgot-password" className="forgot-password" whileHover={{ scale: 1.05 }}> */}
-                    Forgot password?
-                  {/* </motion.a> */}
                 </motion.div>
 
                 {/* Submit Button */}
                 <Form.Item>
                   <CommonButton type="primary" loading={loading} htmlType="submit">
-                    {loading ? "Signing in..." : "Sign In"}
+                    {loading ? "Sign UP..." : "Sign UP"}
                   </CommonButton>
                 </Form.Item>
 
-                {/* Sign Up Link */}
-                <motion.div className="signup-link" variants={itemVariants}
-                 onClick={()=>{
-                  navigate("/signUp")
-                }}
-                
-                >
-                  <p className="signup-text">
-                    Don't have an account?{" "}
-                    <motion.a className="signup-link-text" whileHover={{ scale: 1.05 }}>
-                      Sign up
-                    </motion.a>
-                  </p>
-                </motion.div>
+               
               </Form>
             </motion.div>
           </motion.div>
@@ -221,4 +223,4 @@ const navigate = useNavigate()
   )
 }
 
-export default LoginPage
+export default SignUpPage
