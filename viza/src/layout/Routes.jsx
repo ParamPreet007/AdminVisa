@@ -12,6 +12,6 @@ export const menus =[
  {
     Icon: UserIcon,
     name: "Users",
-    key: "user",
+    key: "users",
   },
 ]

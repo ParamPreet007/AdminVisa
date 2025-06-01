@@ -130,19 +130,18 @@ const AppLayout = () => {
                 <Link
                   key={`/${key}`}
                   to={`/${key}`}
-                  className={`flex items-center py-2 px-3 gap-2 rounded hoverBg`}
-                  style={{
-                    background: slectedMenu.includes(key) ? "#fffff" : "#fffff",
-                  }}
+                  className={`flex items-center py-2 px-3 gap-2 rounded  ${ slectedMenu.includes(key) ? "bg-white" : "bg-transparent"} `}
+                 
                 >
                   <div>
                     <Icon
-                      fill={slectedMenu.includes(key) ? "#fffff" : "#fffff"}
+                      fill={slectedMenu.includes(key) ? "#737375" : "#fffff"}
                     />
                   </div>
                   <div
+                  className="font-bold text-[15px]"
                     style={{
-                      color: "#ffff",
+                      color: slectedMenu?.includes(key)?"#737375":"#fffff",
                     }}
                   >
                     {name}
