@@ -31,10 +31,10 @@ const Header = () => {
     }
   };
   return (
-    <div className="py-0 px-8 bg-[var(--headerbg)] border-b h-12 flex items-center justify-between">
-      <div className="flex items-center justify-between gap-4 ">
+    <div className="py-0 px-8 bg-[var(--headerbg)] border-b h-12 flex items-center justify-end">
+      <div className="flex items-center justify-end gap-4 ">
         <div className="flex border-l pl-4">
-          <div className="flex items-center text-white text-xs pr-2 font-semibold">Hi ! {userName}</div>
+          <div className="flex items-center justify-end text-white text-xs pr-2 font-semibold ">Hi ! {userName}</div>
           <Popover
             open={openChange}
             onOpenChange={(data) => setOpenChange(data)}
