@@ -1,5 +1,5 @@
 import { Card, Popover, Table } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Btn from "../../component/Button";
 import { AddNew, Edit, OptionsIcon, Trash } from "../../assets/Images";
 import CommonTable from "../../component/CommonTable";
@@ -7,7 +7,13 @@ import LabelIcon from "../../component/LabelIcon";
 import { closePopup, setPopupProps } from "../../redux/common";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { getAllUsersAPI } from "../../api/userApi";
+function capitalizeFirstLetter(str) {
+  if (!str) {
+    return str;
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 const Listing = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -29,21 +35,37 @@ const Listing = () => {
     {
       title: "Name",
       dataIndex: "name",
+      width:"60",
       key: "name",
     },
     {
       title: "Email",
       dataIndex: "email",
+      width:"60",
+
       key: "email",
     },
     {
       title: "Role",
       dataIndex: "role",
+      width:"60",
       key: "role",
+      render:(data)=>{
+        return(
+          <>
+          <div>
+            {capitalizeFirstLetter(data )}
+          </div>
+          
+          </>
+        )
+      }
     },
     {
       title: "Status",
       dataIndex: "status",
+      width:"120",
+
       key: "status",
       render: (status) => (
         <span style={{ color: status === "Active" ? "green" : "red" }}>
@@ -102,7 +124,19 @@ const Listing = () => {
       },
     },
   ];
-
+const getAllUserData = async()=>{
+  try{
+    const res= await getAllUsersAPI()
+    setUserData({data:res?.users ,totalRecords:res?.users?.length})
+    console.log(res,'get response here ')
+  }
+  catch(error){
+    console.log(error)
+  }
+}
+  useEffect(()=>{
+getAllUserData()
+  },[])
   return (
     <Card
       // title="Users"
@@ -132,7 +166,7 @@ const Listing = () => {
         columns={columns}
         data={userData?.data}
         loading={loading}
-        searchParams={searchParams}
+        
         totalRecords={userData?.totalRecords}
         setSearchParams={setSearchParams}
       />
