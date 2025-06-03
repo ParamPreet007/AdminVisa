@@ -8,3 +8,11 @@ export const signup = async (payload) => {
     throw error.response.data;
   }
 };
+export const loginApi = async (credentials) => {
+  try {
+    const response = await api.post('/api/v1/auth/login/', credentials);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

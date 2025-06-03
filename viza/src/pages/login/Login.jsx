@@ -10,6 +10,7 @@ import CommonButton from "../../component/CommonButton"
 import "../../style/Login.css"
 import { useNavigate } from 'react-router-dom';
 import { LeftSideContent } from "../../component/LeftSideContent"
+import { loginApi } from "../../api/authApi"
 
 const LoginPage = () => {
   
@@ -70,10 +71,13 @@ const navigate = useNavigate()
 
       // Simulate API call
       // await new Promise((resolve) => setTimeout(resolve, 2000))
-      localStorage.setItem("token","dummyToekn")
-      navigate("/users")
-
+      
+      const res = await loginApi(values)
+      if(res?.status==="OK"){
       message.success("Login successful!")
+        localStorage.setItem("token","dummyToekn")
+      navigate("/users")
+      }
 
       // Here you would typically handle the login logic
       // navigate to dashboard or handle authentication
