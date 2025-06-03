@@ -17,3 +17,12 @@ export const getAllUsersAPI = async () => {
     throw error.response.data;
   }
 };
+
+export const deactivateUserAPI = async (userId) => {
+  try {
+    const response = await api.put(`/api/v1/auth/deactivate/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

@@ -1,4 +1,4 @@
-import { Card, Popover, Table } from "antd";
+import { Card, message, Popover, Switch, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import Btn from "../../component/Button";
 import { AddNew, Edit, OptionsIcon, Trash } from "../../assets/Images";
@@ -7,7 +7,7 @@ import LabelIcon from "../../component/LabelIcon";
 import { closePopup, setPopupProps } from "../../redux/common";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllUsersAPI } from "../../api/userApi";
+import { deactivateUserAPI, getAllUsersAPI } from "../../api/userApi";
 function capitalizeFirstLetter(str) {
   if (!str) {
     return str;
@@ -18,7 +18,16 @@ const Listing = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { popupProps } = useSelector((state) => state);
-
+const getAllUserData = async()=>{
+  try{
+    const res= await getAllUsersAPI()
+    setUserData({data:res?.users ,totalRecords:res?.users?.length})
+    console.log(res,'get response here ')
+  }
+  catch(error){
+    console.log(error)
+  }
+}
   const [userData, setUserData] = useState({
     data: [],
     totalRecords: 0,
@@ -31,6 +40,16 @@ const Listing = () => {
     page: 1,
   });
   const [loading, setLoading] = useState(false);
+  const deactivateUser  = async (id)=>{
+    try{
+      const res = deactivateUserAPI(id)
+      message.success("User has deactivated")
+      getAllUserData()
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
   const columns = [
     {
       title: "Name",
@@ -63,14 +82,20 @@ const Listing = () => {
     },
     {
       title: "Status",
-      dataIndex: "status",
+      dataIndex: "isActive",
       width:"120",
+      key: "isActive",
+      render: (status,record) => (
+       <>
+       <Switch size="small" checked={status} onChange={(e)=>{
+        if(e===false){
+          deactivateUser(record?._id)
+        }
+        else{
 
-      key: "status",
-      render: (status) => (
-        <span style={{ color: status === "Active" ? "green" : "red" }}>
-          {status}
-        </span>
+        }
+       }} />
+       </>
       ),
     },
     {
@@ -124,16 +149,7 @@ const Listing = () => {
       },
     },
   ];
-const getAllUserData = async()=>{
-  try{
-    const res= await getAllUsersAPI()
-    setUserData({data:res?.users ,totalRecords:res?.users?.length})
-    console.log(res,'get response here ')
-  }
-  catch(error){
-    console.log(error)
-  }
-}
+
   useEffect(()=>{
 getAllUserData()
   },[])

@@ -12,7 +12,7 @@ const Add = () => {
 
   const onFinish = async(values) => {
     try{
-const res = await createUserAPI(values)
+const res = await createUserAPI({...values,isActive:true})
 if(res?.status==="OK"){
   navigate("/users")
   message.success(res?.message)
