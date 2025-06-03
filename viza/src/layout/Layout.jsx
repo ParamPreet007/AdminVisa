@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, message } from "antd";
 import { menus, routes } from "./Routes";
 import Header from "./Header";
 import SubMenu from "antd/es/menu/SubMenu";

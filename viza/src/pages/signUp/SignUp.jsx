@@ -10,6 +10,7 @@ import CommonButton from "../../component/CommonButton"
 import "../../style/Login.css"
 import { useNavigate } from 'react-router-dom';
 import { LeftSideContent } from "../../component/LeftSideContent"
+import { signup } from "../../api/authApi"
 
 const SignUpPage = () => {
   
@@ -69,15 +70,21 @@ const navigate = useNavigate()
       console.log("Form values:", values)
 
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const res = await signup(values)
+      console.log(res,'get the response of ss')
+      if(res?.status ==="OK"){
+      message.success("Added Succesfully")
+        navigate("/login")
 
-      message.success("Login successful!")
+      }   
+      console.log(res,'get response here ')
+
 
       // Here you would typically handle the login logic
       // navigate to dashboard or handle authentication
     } catch (error) {
       console.error("Login error:", error)
-      message.error("Login failed. Please try again.")
+      message.error("User already Exist")
     } finally {
       setLoading(false)
     }
