@@ -25,10 +25,6 @@ const AppLayout = () => {
     setSlectedMenu([location?.pathname?.split("/")?.[1]]);
     setSlectedSubMenu([location?.pathname?.split("/")?.[2] || ""]);
   }, [location?.pathname]);
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) navigate("/login");
-  // }, [authLogin]);
-
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/login");
   }, [localStorage.getItem("token")]);
