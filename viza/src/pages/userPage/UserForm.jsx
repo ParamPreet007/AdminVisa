@@ -16,6 +16,7 @@ import {
   FileImageOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
+import { submitUserFormAPi } from "../../api/userApi";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,7 +24,7 @@ const { TextArea } = Input;
 export const UserForm = ({ open, onCancel }) => {
   const [form] = Form.useForm();
   const [imageLoading, setImageLoading] = useState({
-    aadhaarphoto: false,
+    aadhar: false,
     passportPhoto: false,
   });
   const [payload,setPayload]=useState({})
@@ -58,6 +59,10 @@ export const UserForm = ({ open, onCancel }) => {
         return;
       }
       if (info?.file?.originFileObj) {
+        setPayload({
+          ...payload,
+          photo:info?.file?.originFileObj
+        })
         const formData = new FormData();
         formData.append("file", info?.file?.originFileObj);
         // const response = await s3WorkerGenericApi(
@@ -108,6 +113,10 @@ export const UserForm = ({ open, onCancel }) => {
         return;
       }
       if (info?.file?.originFileObj) {
+          setPayload({
+          ...payload,
+          [fieldType]:info?.file?.originFileObj
+        })
         const formData = new FormData();
         formData.append("file", info?.file?.originFileObj);
         //   const response = await s3GenericApi(
@@ -134,31 +143,13 @@ export const UserForm = ({ open, onCancel }) => {
 
   const onFinish = async (values) => {
     try {
-      console.log(values, "values here ");
+      console.log(values, "values here ",payload);
       // Create FormData for file upload
       const formData = new FormData();
 
-      // Append all form fields
-      Object.keys(values).forEach((key) => {
-        if (key === "picture" && values[key]?.fileList?.length > 0) {
-          formData.append("picture", values[key].fileList[0].originFileObj);
-        } else if (key !== "picture") {
-          formData.append(key, values[key]);
-        }
-      });
+  const res = await submitUserFormAPi({...values,...payload})
 
-      // Replace with your actual backend endpoint
-      const response = await fetch("/api/submit-form", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        message.success("Form submitted successfully!");
-        form.resetFields();
-      } else {
-        message.error("Failed to submit form. Please try again.");
-      }
+     
     } catch (error) {
       console.error("Error submitting form:", error);
       message.error("An error occurred while submitting the form.");
@@ -309,7 +300,7 @@ export const UserForm = ({ open, onCancel }) => {
             </div>
 
             <Row gutter={16}>
-              <Col xs={24} sm={12}>
+              {/* <Col xs={24} sm={12}>
                 <Form.Item
                   label="First Name"
                   name="name"
@@ -330,12 +321,12 @@ export const UserForm = ({ open, onCancel }) => {
                 >
                   <Input placeholder="Enter your full name" />
                 </Form.Item>
-              </Col>
+              </Col> */}
 
               <Col xs={24} sm={12}>
                 <Form.Item
                   label="Father's Name"
-                  name="fatherName"
+                  name="father"
                   rules={[
                     {
                       required: true,
@@ -354,31 +345,25 @@ export const UserForm = ({ open, onCancel }) => {
                   <Input placeholder="Enter your father's name" />
                 </Form.Item>
               </Col>
-            </Row>
-
-            <Row gutter={16}>
-              <Col xs={24} sm={12}>
+               <Col xs={24} sm={12}>
                 <Form.Item
-                  label="Mother's Name"
-                  name="motherName"
+                  label="State"
+                  name="state"
                   rules={[
                     {
                       required: true,
-                      message: "Please enter your mother's name!",
+                      message: "Please enter your State",
                     },
-                    {
-                      min: 2,
-                      message: "Name must be at least 2 characters long!",
-                    },
-                    {
-                      pattern: /^[a-zA-Z\s]+$/,
-                      message: "Name can only contain letters and spaces!",
-                    },
+                   
                   ]}
                 >
                   <Input placeholder="Enter your mother's name" />
                 </Form.Item>
               </Col>
+            </Row>
+
+            <Row gutter={16}>
+             
             </Row>
 
             {/* Contact Information Section */}
@@ -411,15 +396,11 @@ export const UserForm = ({ open, onCancel }) => {
             <Row gutter={16}>
               <Col xs={24} sm={12}>
                 <Form.Item
-                  label="Phone Number"
-                  name="phone"
-                  rules={[{ validator: validatePhone }]}
+                  label="City"
+                  name="city"
+                  rules={[ { required: true, message: "Please enter your City!" },]}
                 >
-                  <Input
-                    placeholder="Enter 10-digit phone number"
-                    maxLength={10}
-                    addonBefore="+91"
-                  />
+                  <Input placeholder="Enter your father's name" />
                 </Form.Item>
               </Col>
 
@@ -452,35 +433,7 @@ export const UserForm = ({ open, onCancel }) => {
               </h3>
             </div>
 
-            <Row gutter={16}>
-              <Col xs={24} sm={12}>
-                <Form.Item
-                  label="Aadhaar Card Number"
-                  name="aadhaarNumber"
-                  rules={[{ validator: validateAadhaar }]}
-                >
-                  <Input
-                    placeholder="Enter 12-digit Aadhaar number"
-                    maxLength={14}
-                    onChange={handleAadhaarChange}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col xs={24} sm={12}>
-                <Form.Item
-                  label="PAN Card Number"
-                  name="panNumber"
-                  rules={[{ validator: validatePAN }]}
-                >
-                  <Input
-                    placeholder="Enter PAN number (e.g., ABCDE1234F)"
-                    maxLength={10}
-                    onChange={handlePanChange}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+           
 
             <Row>
               <Col xs={24} sm={12}>
@@ -546,7 +499,7 @@ export const UserForm = ({ open, onCancel }) => {
                     Aadhaar Card 
                   </div>
                   <Form.Item
-                    name="aadhaarphoto"
+                    name="aadhar"
                     rules={[
                       {
                         required: true,
@@ -556,17 +509,17 @@ export const UserForm = ({ open, onCancel }) => {
                   >
                     <Card
                       className={
-                        !imageProcess?.aadhaarphoto
+                        !imageProcess?.aadhar
                           ? "w-24 h-24 rounded-md bg-[#FFFFFF] border-dashed border border-black mx-5 flex justify-center items-center"
                           : "w-24 h-24 mx-5"
                       }
                     >
-                      {imageProcess?.aadhaarphoto ? (
+                      {imageProcess?.aadhar ? (
                         <div class="image-container">
                           <div class="image-wrapper">
                             <img
-                              src={imageProcess?.aadhaarphoto}
-                              alt={imageProcess?.aadhaarphoto}
+                              src={imageProcess?.aadhar}
+                              alt={imageProcess?.aadhar}
                               className="w-24 h-24 rounded-md uploadImgSection"
                             />
                             
@@ -574,17 +527,17 @@ export const UserForm = ({ open, onCancel }) => {
                         </div>
                       ) : (
                         <Upload
-                          name="aadhaarphoto"
+                          name="aadhar"
                           onDrop={false}
                           listType="text"
                           accept="image/*"
                           className="lableSlipUpload"
                           onChange={(e) =>
-                            UploadPicCustomAPi(e, "aadhaarphoto")
+                            UploadPicCustomAPi(e, "aadhar")
                           }
                           customRequest={addhareCustom}
                         >
-                          {imageLoading?.aadhaarphoto ? (
+                          {imageLoading?.aadhar ? (
                             <Spin className="h-24 w-24 cameraIcon" />
                           ) : (
                             <FileImageOutlined

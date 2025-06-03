@@ -73,9 +73,10 @@ const navigate = useNavigate()
       // await new Promise((resolve) => setTimeout(resolve, 2000))
       
       const res = await loginApi(values)
+      console.log(res,'get response ')
       if(res?.status==="OK"){
       message.success("Login successful!")
-        localStorage.setItem("token","dummyToekn")
+        localStorage.setItem("token",res?.userID)
       navigate("/users")
       }
 

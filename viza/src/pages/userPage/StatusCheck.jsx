@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Steps, Card, Alert, Button, Modal, Tag, Divider } from "antd"
 import {
   CheckCircleOutlined,
@@ -8,6 +8,7 @@ import {
   FileTextOutlined,
   UserOutlined,
 } from "@ant-design/icons"
+import { getUserStatusActiveAPI } from "../../api/userApi"
 
 const { Step } = Steps
 
@@ -99,6 +100,19 @@ export default function VisaStatusPage({open,onCancel}) {
         ),
     },
   ]
+
+  const getStatus = async()=>{
+    try{
+      const id = localStorage.getItem("token")
+      const res = await getUserStatusActiveAPI(id)
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+useEffect(()=>{
+  getStatus()
+},[])
 
   return (
 <Modal
