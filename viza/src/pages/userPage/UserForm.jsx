@@ -413,8 +413,8 @@ export const UserForm = ({ open, onCancel }) => {
                   ]}
                 >
                   <Select placeholder="Select visa type">
-                    <Option value="workType">Work Type</Option>
-                    <Option value="studyType">Study Type</Option>
+                    <Option value="work">Work Type</Option>
+                    <Option value="study">Study Type</Option>
                   </Select>
                 </Form.Item>
               </Col>

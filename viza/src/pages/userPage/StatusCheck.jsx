@@ -100,11 +100,13 @@ export default function VisaStatusPage({open,onCancel}) {
         ),
     },
   ]
+  const [img,setImage] = useState("")
 
   const getStatus = async()=>{
     try{
       const id = localStorage.getItem("token")
       const res = await getUserStatusActiveAPI(id)
+      console.log(res,'get response here ')
     }
     catch(error){
       console.log(error)
