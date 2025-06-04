@@ -7,7 +7,7 @@ import LabelIcon from "../../component/LabelIcon";
 import { closePopup, setPopupProps } from "../../redux/common";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deactivateUserAPI, getAllUsersAPI } from "../../api/userApi";
+import { activateUserApi, deactivateUserAPI, deleteUserAPI, getAllUsersAPI } from "../../api/userApi";
 function capitalizeFirstLetter(str) {
   if (!str) {
     return str;
@@ -32,8 +32,24 @@ const getAllUserData = async()=>{
     data: [],
     totalRecords: 0,
   });
-  const deleteUser  = async ()=>{
-    console.log("Delete user her e")
+  const deleteUser  = async (id)=>{
+    try{
+       const res = await deleteUserAPI(id)
+    // if(res?.status===200){
+      message.success("User delete Successfully")
+     
+    // }
+     dispatch(closePopup())
+    }
+    catch(error){
+      console.log(error)
+    }
+   finally{
+      getAllUserData()
+
+   }
+
+    
   }
   const [searchParams, setSearchParams] = useState({
     limit: 25,
@@ -44,10 +60,27 @@ const getAllUserData = async()=>{
     try{
       const res = deactivateUserAPI(id)
       message.success("User has deactivated")
-      getAllUserData()
     }
     catch(error){
       console.log(error)
+    }
+    finally{
+      getAllUserData()
+
+    }
+  }
+  const activateUser  = async(id)=>{
+     try{
+      const res = await activateUserApi(id)
+      console.log(res,'redd')
+      message.success("User has activated")
+    }
+    catch(error){
+      console.log(error)
+    }
+    finally{
+      getAllUserData()
+
     }
   }
   const columns = [
@@ -92,7 +125,7 @@ const getAllUserData = async()=>{
           deactivateUser(record?._id)
         }
         else{
-
+          activateUser(record?._id)
         }
        }} />
        </>
@@ -109,11 +142,11 @@ const getAllUserData = async()=>{
               trigger="click"
               content={
                 <div className="w-28">
-                    <LabelIcon
+                    {/* <LabelIcon
                       icon={Edit}
                       label="Edit"
                       onClick={() => navigate("/user/edit/" + record?._id)}
-                    />
+                    /> */}
                     <LabelIcon
                       icon={Trash}
                       label="Delete"

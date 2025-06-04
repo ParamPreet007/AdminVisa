@@ -18,9 +18,11 @@ const Btn = ({
   progessStart,
   heavyData,
   percentage = 0,
+  htmlType
 }) => {
   return (
     <button
+    type={htmlType}
       className={`text-xs border  py-1 px-2 flex gap-2 items-center justify-around rounded-md  ${{
         default: "",
         primary: listing

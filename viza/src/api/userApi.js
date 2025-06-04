@@ -69,3 +69,20 @@ export const submitUserFormAPi = async(applicationData)=>{
     }
 }
 
+export const activateUserApi = async(id)=>{
+   try {
+    const response = await api.put(`/api/v1/auth/activateUser/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+export const deleteUserAPI = async(id)=>{
+   try {
+    const response = await api.delete(`/api/v1/auth/delete-user/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}

@@ -3,6 +3,7 @@
 import { Card, Form, Input, Select, Button, message } from "antd"
 import { createUserAPI } from "../../api/userApi"
 import { useNavigate } from "react-router-dom"
+import Btn from "../../component/Button"
 
 const { Option } = Select
 
@@ -20,13 +21,11 @@ if(res?.status==="OK"){
     }
     catch(error){
   message.error(error?.message)
-
       console.log(error)
     }
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo)
     message.error("Please check the form fields")
   }
 
@@ -72,12 +71,22 @@ if(res?.status==="OK"){
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
-            Add User
-          </Button>
-          <Button htmlType="button" onClick={() => form.resetFields()}>
-            Reset
-          </Button>
+           <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            { required: true, message: "Please input the Password!" },
+            { min: 2, message: "Password must be at least 2 characters long!" },
+            { max: 50, message: "Password cannot exceed 50 characters!" },
+          ]}
+        >
+          <Input placeholder="Enter Password" />
+        </Form.Item>
+            <div className="flex gap-2 items-center">
+          <Btn type="subPrimary" label={"Reset"} className={"px-2"} onClick={()=>form.resetFields()} />
+           <Btn label={"Add User"} type="primary" htmlType="submit" />
+            </div>
+         
         </Form.Item>
       </Form>
     </Card>

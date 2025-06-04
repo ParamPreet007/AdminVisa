@@ -67,7 +67,6 @@ const navigate = useNavigate()
     try {
       setLoading(true)
 
-      console.log("Form values:", values)
 
       // Simulate API call
       // await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -84,7 +83,7 @@ const navigate = useNavigate()
       // navigate to dashboard or handle authentication
     } catch (error) {
       console.error("Login error:", error)
-      message.error("Login failed. Please try again.")
+      message.error(error?.message)
     } finally {
       setLoading(false)
     }
