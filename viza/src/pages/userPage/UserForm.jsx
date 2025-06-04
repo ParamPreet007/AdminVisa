@@ -148,11 +148,20 @@ export const UserForm = ({ open, onCancel }) => {
       const formData = new FormData();
 
   const res = await submitUserFormAPi({...values,...payload})
+  if(res?.status==="OK"){
+ message.success("Application Submitted Successfully")
+
+  }
+  else{
+      message.error("You have already submitted application");
+  }
 
      
     } catch (error) {
-      console.error("Error submitting form:", error);
-      message.error("An error occurred while submitting the form.");
+      message.error("You have already submitted application");
+    }
+    finally{
+      onCancel()
     }
   };
 

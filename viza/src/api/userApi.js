@@ -61,6 +61,7 @@ export const submitUserFormAPi = async(applicationData)=>{
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log(response,'get the reponse here axios ')
     return response.data;
 
     }
