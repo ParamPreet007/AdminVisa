@@ -13,6 +13,8 @@ import SubMenu from "antd/es/menu/SubMenu";
 import PrivateRoute from "../component/PrivatePage";
 import DotIcon from "../assets/SvgElement/DotIcon";
 import Popup from "../component/Popover";
+import { Logo } from "../assets/Images";
+import { useSelector } from "react-redux";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -20,14 +22,15 @@ const AppLayout = () => {
   const location = useLocation();
   const [slectedMenu, setSlectedMenu] = useState([""]);
   const [slectedSubMenu, setSlectedSubMenu] = useState([""]);
+  const { authLogin } = useSelector((value) => value);
 
   useEffect(() => {
     setSlectedMenu([location?.pathname?.split("/")?.[1]]);
     setSlectedSubMenu([location?.pathname?.split("/")?.[2] || ""]);
   }, [location?.pathname]);
   useEffect(() => {
-    if (!localStorage.getItem("token")) navigate("/login");
-  }, [localStorage.getItem("token")]);
+    if (!authLogin?.isAuthenticate) navigate("/login");
+  }, [authLogin]);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Layout>
@@ -42,6 +45,24 @@ const AppLayout = () => {
             backgroundColor: "var(--primary)",
           }}
         >
+            <div
+            className="flex font-semibold text-base  h-12  border-r  bg-[var(--headerbg)]"
+            style={{
+              position: "fixed",
+              zIndex: 100,
+              top: 0,
+              width: '241px'
+            }}
+          >
+            
+              
+                <div className="ml-2 w-48 h-12 text-white flex items-center justify-center text-3xl">
+                  VIZA VERIFY
+                </div>
+              
+             
+            
+          </div>
         
           <Menu
             className=" m-0 p-2 text-xs mt-12"

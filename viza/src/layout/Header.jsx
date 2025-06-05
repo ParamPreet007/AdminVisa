@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closePopup, setPopupLoading, setPopupProps } from "../redux/common";
 import { useEffect, useState } from "react";
+import { setLogout } from "../redux/auth";
 
 const Header = () => {
 
@@ -20,6 +21,8 @@ const Header = () => {
       dispatch(setPopupLoading(true));
        localStorage.clear()
         dispatch(closePopup())
+        dispatch(setLogout());
+
       // const res = await authLogut({ message: true });
       // if (res?.status === 200 || res?.status === 201) {
       //   dispatch(setLogout());
