@@ -147,7 +147,7 @@ const AppLayout = () => {
                 <Link
                   key={`/${key}`}
                   to={`/${key}`}
-                  className={`flex items-center py-2 px-3 gap-2 rounded  ${ slectedMenu.includes(key) ? "bg-white" : "bg-transparent"} `}
+                  className={`flex items-center my-2  py-2 px-3 gap-2 rounded  ${ slectedMenu.includes(key) ? "bg-white" : "bg-transparent"} `}
                  
                 >
                   <div>

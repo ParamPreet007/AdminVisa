@@ -18,18 +18,18 @@ export default function VisaStatusPage({open,onCancel}) {
   const [showRejectionModal, setShowRejectionModal] = useState(false)
 
   // Sample application data - you can modify this to test different statuses
-  // const applicationData = {
-  //   applicationId: "VS2024001234",
-  //   applicantName: "John Doe",
-  //   visaType: "Tourist Visa",
-  //   submissionDate: "2024-01-15",
-  //   currentStatus: "rejected", // Can be: "pending", "under_review", "accepted", "rejected"
-  //   rejectionReasons: [
-  //     "Insufficient financial documentation",
-  //     "Travel itinerary not detailed enough",
-  //     "Missing employment verification letter",
-  //   ],
-  // }
+  const applicationDataStatus = {
+    applicationId: "VS2024001234",
+    applicantName: "John Doe",
+    visaType: "Tourist Visa",
+    submissionDate: "2024-01-15",
+    status: "rejected", // Can be: "pending", "under_review", "accepted", "rejected"
+    rejectionReasons: [
+      "Insufficient financial documentation",
+      "Travel itinerary not detailed enough",
+      "Missing employment verification letter",
+    ],
+  }
 
   const [applicationData,setApplicationData] = useState({})
   const getStatusInfo = (status) => {
@@ -72,7 +72,7 @@ export default function VisaStatusPage({open,onCancel}) {
     }
   }
 
-  // const statusInfo = getStatusInfo(applicationData.currentStatus)
+  // const statusInfo = getStatusInfo(applicationData.status)
 
   const steps = [
     {
@@ -86,17 +86,17 @@ export default function VisaStatusPage({open,onCancel}) {
       icon: <UserOutlined />,
     },
     {
-      title: applicationData.currentStatus === "accepted" ? "Accepted" : "Decision Made",
+      title: applicationData?.status === "accepted" ? "Accepted" : "Decision Made",
       description:
-        applicationData.currentStatus === "accepted"
+        applicationData?.status === "accepted"
           ? "Visa application approved"
-          : applicationData.currentStatus === "rejected"
+          : applicationData.status === "rejected"
             ? "Application has been reviewed"
             : "Awaiting final decision",
       icon:
-        applicationData.currentStatus === "accepted" ? (
+        applicationData?.status === "accepted" ? (
           <CheckCircleOutlined />
-        ) : applicationData.currentStatus === "rejected" ? (
+        ) : applicationData?.status === "rejected" ? (
           <CloseCircleOutlined />
         ) : (
           <ClockCircleOutlined />
@@ -109,9 +109,19 @@ export default function VisaStatusPage({open,onCancel}) {
     try{
       const id = localStorage.getItem("token")
       const res = await getUserStatusActiveAPI(id)
-    const data =   getStatusInfo(res?.userDetails?.[0]?.status)
-      setStatusInfo(data)
+      if(res?.userDetails?.length){
+          const data =   getStatusInfo(res?.userDetails?.[0]?.status||{})
+      setStatusInfo(data||{})
       setApplicationData(res?.userDetails[0])
+      }
+      else{
+  const statusInfo = getStatusInfo(applicationDataStatus.status)
+
+        //  const data =   getStatusInfo(res?.userDetails?.[0]?.status||{})
+      setStatusInfo(statusInfo)
+      setApplicationData(applicationDataStatus)
+      }
+  
     }
     catch(error){
       console.log(error)
@@ -119,7 +129,7 @@ export default function VisaStatusPage({open,onCancel}) {
   }
 useEffect(()=>{
   getStatus()
-},[])
+},[open])
 
   return (
 <Modal
@@ -163,7 +173,7 @@ useEffect(()=>{
                 <Tag color={statusInfo.color} className="text-sm px-3 py-1">
                   {statusInfo.text}
                 </Tag>
-                {applicationData.currentStatus === "rejected" && (
+                {applicationData?.status === "rejected" && (
                   <Button
                     type="text"
                     icon={<ExclamationCircleOutlined />}

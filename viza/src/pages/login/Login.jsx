@@ -11,9 +11,11 @@ import "../../style/Login.css"
 import { useNavigate } from 'react-router-dom';
 import { LeftSideContent } from "../../component/LeftSideContent"
 import { loginApi } from "../../api/authApi"
+import { useDispatch } from "react-redux"
+import { setLogin } from "../../redux/auth"
 
 const LoginPage = () => {
-  
+    const dispatch = useDispatch()
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -76,6 +78,7 @@ const navigate = useNavigate()
       if(res?.status==="OK"){
       message.success("Login successful!")
         localStorage.setItem("token",res?.userID)
+        
       navigate("/users")
       }
 
@@ -86,6 +89,7 @@ const navigate = useNavigate()
       message.error(error?.message)
     } finally {
       setLoading(false)
+      dispatch(setLogin())
     }
   }
 
