@@ -13,30 +13,33 @@ import { getUserStatusActiveAPI } from "../../api/userApi"
 const { Step } = Steps
 
 export default function VisaStatusPage({open,onCancel}) {
+
+  const[statusInfo,setStatusInfo] = useState("")
   const [showRejectionModal, setShowRejectionModal] = useState(false)
 
   // Sample application data - you can modify this to test different statuses
-  const applicationData = {
-    applicationId: "VS2024001234",
-    applicantName: "John Doe",
-    visaType: "Tourist Visa",
-    submissionDate: "2024-01-15",
-    currentStatus: "rejected", // Can be: "pending", "under_review", "accepted", "rejected"
-    rejectionReasons: [
-      "Insufficient financial documentation",
-      "Travel itinerary not detailed enough",
-      "Missing employment verification letter",
-    ],
-  }
+  // const applicationData = {
+  //   applicationId: "VS2024001234",
+  //   applicantName: "John Doe",
+  //   visaType: "Tourist Visa",
+  //   submissionDate: "2024-01-15",
+  //   currentStatus: "rejected", // Can be: "pending", "under_review", "accepted", "rejected"
+  //   rejectionReasons: [
+  //     "Insufficient financial documentation",
+  //     "Travel itinerary not detailed enough",
+  //     "Missing employment verification letter",
+  //   ],
+  // }
 
+  const [applicationData,setApplicationData] = useState({})
   const getStatusInfo = (status) => {
     switch (status) {
       case "pending":
         return {
           current: 0,
           status: "process",
-          color: "blue",
-          text: "Application Submitted",
+          color: "yellow",
+          text: "Application Pending",
         }
       case "under_review":
         return {
@@ -69,7 +72,7 @@ export default function VisaStatusPage({open,onCancel}) {
     }
   }
 
-  const statusInfo = getStatusInfo(applicationData.currentStatus)
+  // const statusInfo = getStatusInfo(applicationData.currentStatus)
 
   const steps = [
     {
@@ -106,7 +109,9 @@ export default function VisaStatusPage({open,onCancel}) {
     try{
       const id = localStorage.getItem("token")
       const res = await getUserStatusActiveAPI(id)
-      console.log(res,'get response here ')
+    const data =   getStatusInfo(res?.userDetails?.[0]?.status)
+      setStatusInfo(data)
+      setApplicationData(res?.userDetails[0])
     }
     catch(error){
       console.log(error)
@@ -141,16 +146,14 @@ useEffect(()=>{
               <h3 className="text-lg font-semibold mb-3">Application Details</h3>
               <div className="space-y-2">
                 <p>
-                  <span className="font-medium">Application ID:</span> {applicationData.applicationId}
+                  <span className="font-medium">Application ID:</span> {applicationData?._id}
+                </p>
+               
+                <p>
+                  <span className="font-medium">Visa Type:</span> {applicationData?.visaType}
                 </p>
                 <p>
-                  <span className="font-medium">Applicant:</span> {applicationData.applicantName}
-                </p>
-                <p>
-                  <span className="font-medium">Visa Type:</span> {applicationData.visaType}
-                </p>
-                <p>
-                  <span className="font-medium">Submission Date:</span> {applicationData.submissionDate}
+                  <span className="font-medium">Submission Date:</span> {applicationData?.createdAt}
                 </p>
               </div>
             </div>
@@ -186,7 +189,7 @@ useEffect(()=>{
             </Steps>
           </div>
 
-          {applicationData.currentStatus === "rejected" && (
+          {applicationData?.status === "rejected" && (
             <Alert
               message="Application Rejected"
               description="Your visa application has been rejected. Click the details button above to see the specific reasons."
@@ -196,7 +199,7 @@ useEffect(()=>{
             />
           )}
 
-          {applicationData.currentStatus === "accepted" && (
+          {applicationData?.status === "accepted" && (
             <Alert
               message="Application Approved"
               description="Congratulations! Your visa application has been approved. You will receive your visa documents soon."
@@ -206,7 +209,7 @@ useEffect(()=>{
             />
           )}
 
-          {(applicationData.currentStatus === "pending" || applicationData.currentStatus === "under_review") && (
+          {(applicationData?.status === "pending" || applicationData?.status === "under_review") && (
             <Alert
               message="Application in Progress"
               description="Your application is being processed. We will notify you once a decision is made."
@@ -220,28 +223,28 @@ useEffect(()=>{
         <Card className="shadow-lg">
           <h3 className="text-lg font-semibold mb-4">What's Next?</h3>
           <div className="space-y-3">
-            {applicationData.currentStatus === "pending" && (
+            {applicationData?.status === "pending" && (
               <p className="text-gray-600">
                 • Your application is in queue for review
                 <br />• Processing time: 5-10 business days
                 <br />• You will be notified via email of any updates
               </p>
             )}
-            {applicationData.currentStatus === "under_review" && (
+            {applicationData?.status === "under_review" && (
               <p className="text-gray-600">
                 • A visa officer is currently reviewing your application
                 <br />• Additional documents may be requested
                 <br />• Decision expected within 3-5 business days
               </p>
             )}
-            {applicationData.currentStatus === "accepted" && (
+            {applicationData?.status === "accepted" && (
               <p className="text-gray-600">
                 • Your visa will be processed and mailed to you
                 <br />• Expected delivery: 3-5 business days
                 <br />• Track your visa delivery using the tracking number sent to your email
               </p>
             )}
-            {applicationData.currentStatus === "rejected" && (
+            {applicationData?.status === "rejected" && (
               <p className="text-gray-600">
                 • Review the rejection reasons by clicking the details button
                 <br />• You may reapply after addressing the mentioned issues
@@ -265,12 +268,12 @@ useEffect(()=>{
           <div className="space-y-4">
             <Alert message="Your application was rejected for the following reasons:" type="error" showIcon />
             <div className="space-y-2">
-              {applicationData.rejectionReasons.map((reason, index) => (
+              {/* {applicationData.rejectionReasons.map((reason, index) => (
                 <div key={index} className="flex items-start gap-2">
                   <CloseCircleOutlined className="text-red-500 mt-1" />
                   <span>{reason}</span>
                 </div>
-              ))}
+              ))} */}
             </div>
             <div className="bg-blue-50 p-4 rounded-lg">
               <h4 className="font-semibold text-blue-900 mb-2">Next Steps:</h4>

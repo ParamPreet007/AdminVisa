@@ -1,4 +1,4 @@
-import { Modal, Spin } from "antd";
+import { Image, Modal, Spin } from "antd";
 import React, { useState } from "react";
 import {
   Form,
@@ -278,11 +278,13 @@ export const UserForm = ({ open, onCancel }) => {
               {imageProcess?.showImage ? (
                 <div class="image-container">
                   <div class="image-wrapper">
-                    <img
+                    {/* <img
                       src={imageProcess?.showImage}
                       alt={imageProcess?.showImage}
                       className="w-24 h-24 rounded-full uploadImgSection"
-                    />
+                    /> */}
+                    <Image src={imageProcess?.showImage} alt="image" width={100} height={100} className=" rounded-full uploadImgSection" />
+
                     <div class="icon-container rounded-full">
                       <div class="center-icon flex"></div>
                     </div>
@@ -459,30 +461,33 @@ export const UserForm = ({ open, onCancel }) => {
                       },
                     ]}
                   >
-                    <Card
+                  
+                      {imageProcess?.passport ? (
+                        <div class="image-container">
+                          <div class="image-wrapper">
+                            {/* <img
+                              src={imageProcess?.passport}
+                              alt={imageProcess?.passport}
+                              className="w-24 h-24 rounded-md uploadImgSection"
+                            /> */}
+                    <Image src={imageProcess?.passport} alt="image" width={100} height={100} className="  uploadImgSection" />
+
+                          </div>
+                        </div>
+                      ) : (
+                          <Card
                       className={
                         !imageProcess?.passport
                           ? "w-24 h-24 rounded-md bg-[#FFFFFF] border-dashed border border-black mx-5 flex justify-center items-center"
                           : "w-24 h-24 mx-5"
                       }
                     >
-                      {imageProcess?.passport ? (
-                        <div class="image-container">
-                          <div class="image-wrapper">
-                            <img
-                              src={imageProcess?.passport}
-                              alt={imageProcess?.passport}
-                              className="w-24 h-24 rounded-md uploadImgSection"
-                            />
-                          </div>
-                        </div>
-                      ) : (
                         <Upload
                           name="passport"
                           listType="text"
                           onDrop={false}
                           accept="image/*"
-                          className="lableSlipUpload"
+                          className="lableSlipUpload cursor-pointer"
                           onChange={(e) => UploadPicCustomAPi(e, "passport")}
                           customRequest={passportCusotm}
                         >
@@ -497,8 +502,9 @@ export const UserForm = ({ open, onCancel }) => {
                             />
                           )}
                         </Upload>
-                      )}
                     </Card>
+
+                      )}
                   </Form.Item>
                 </div>
               </Col>
@@ -516,31 +522,34 @@ export const UserForm = ({ open, onCancel }) => {
                       },
                     ]}
                   >
-                    <Card
+                   
+                      {imageProcess?.aadhar ? (
+                        <div class="image-container">
+                          <div class="image-wrapper">
+                            {/* <img
+                              src={imageProcess?.aadhar}
+                              alt={imageProcess?.aadhar}
+                              className="w-24 h-24 rounded-md uploadImgSection"
+                            /> */}
+                    <Image src={imageProcess?.aadhar} alt="image" width={100} height={100} className="  uploadImgSection" />
+
+                            
+                          </div>
+                        </div>
+                      ) : (
+                         <Card
                       className={
                         !imageProcess?.aadhar
                           ? "w-24 h-24 rounded-md bg-[#FFFFFF] border-dashed border border-black mx-5 flex justify-center items-center"
                           : "w-24 h-24 mx-5"
                       }
                     >
-                      {imageProcess?.aadhar ? (
-                        <div class="image-container">
-                          <div class="image-wrapper">
-                            <img
-                              src={imageProcess?.aadhar}
-                              alt={imageProcess?.aadhar}
-                              className="w-24 h-24 rounded-md uploadImgSection"
-                            />
-                            
-                          </div>
-                        </div>
-                      ) : (
                         <Upload
                           name="aadhar"
                           onDrop={false}
                           listType="text"
                           accept="image/*"
-                          className="lableSlipUpload"
+                          className="lableSlipUpload cursor-pointer"
                           onChange={(e) =>
                             UploadPicCustomAPi(e, "aadhar")
                           }
@@ -557,8 +566,9 @@ export const UserForm = ({ open, onCancel }) => {
                             />
                           )}
                         </Upload>
-                      )}
                     </Card>
+
+                      )}
                   </Form.Item>
                 </div>
               </Col>
