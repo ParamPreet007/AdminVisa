@@ -1,5 +1,6 @@
 import UserIcon from "../assets/SvgElement/UserIcon"
 import Dashboard from "../pages/dashboard/Dashboard"
+import OfficerList from "../pages/officerList/Index"
 import Users from "../pages/users/Index"
 export const routes = [
 
@@ -10,6 +11,10 @@ export const routes = [
   {
     path:"/Dashboard/*",
     Element:Dashboard
+  },
+  {
+    path:"/Officer/*",
+    Element:OfficerList
   }
 
 ]
@@ -25,4 +30,9 @@ export const menus =[
     name: "Dashboard",
     key: "Dashboard",
   },
+  {
+    Icon:UserIcon,
+    name:"Officer",
+    key:"Officer"
+  }
 ]

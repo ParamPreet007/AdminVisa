@@ -87,3 +87,12 @@ export const deleteUserAPI = async(id)=>{
     throw error.response.data;
   }
 }
+
+export const getAllFormSubmitUser = async () => {
+  try {
+    const response = await api.get('/api/v1/application/allusers');
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
