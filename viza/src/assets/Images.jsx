@@ -6,6 +6,7 @@ import OptionsIcon from "./svg/OptionsIcon.svg"
 import Trash from "./svg/Trash.svg"
 import Edit from "./svg/Edit.svg"
 import Logo from "./svg/Logo.png"
+import View from "./svg/View.svg"
 export{
     Logout,
     Avatar,
@@ -14,5 +15,6 @@ export{
     OptionsIcon,
     Trash,
     Edit,
-    Logo
+    Logo,
+    View
 }

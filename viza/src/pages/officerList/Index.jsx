@@ -1,7 +1,7 @@
 import { Card, message, Popover, Switch, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import Btn from "../../component/Button";
-import { AddNew, Edit, OptionsIcon, Trash } from "../../assets/Images";
+import { AddNew, Edit, OptionsIcon, Trash, View } from "../../assets/Images";
 import CommonTable from "../../component/CommonTable";
 import LabelIcon from "../../component/LabelIcon";
 import { closePopup, setPopupProps } from "../../redux/common";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { activateUserApi, deactivateUserAPI, deleteUserAPI, getAllFormSubmitUser, getAllUsersAPI } from "../../api/userApi";
 import dayjs from "dayjs";
+import DetailCard from "./DetailUser";
 function capitalizeFirstLetter(str) {
   if (!str) {
     return str;
@@ -18,11 +19,15 @@ function capitalizeFirstLetter(str) {
 const OfficerList = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const[detailedUser,setDetailedUser] = useState({
+    open:false,
+    data:{}
+  })
   const { popupProps } = useSelector((state) => state);
 const getAllUserData = async()=>{
   try{
     const res= await getAllFormSubmitUser()
-    setUserData({data:res?.applications ,totalRecords:res?.users?.length})
+    setUserData({data:res?.applications ,totalRecords:res?.applications?.length})
     console.log(res,'get response here ')
   }
   catch(error){
@@ -88,7 +93,7 @@ const getAllUserData = async()=>{
     {
       title: "Name",
       dataIndex: "name",
-      width:"60",
+      width:60,
       key: "name",
       render:(data,record)=>{
         return (
@@ -103,7 +108,7 @@ const getAllUserData = async()=>{
     {
       title: "Email",
       dataIndex: "email",
-      width:"60",
+      width:60,
       key: "email",
        render:(data,record)=>{
         return (
@@ -119,7 +124,7 @@ const getAllUserData = async()=>{
     {
       title: "Status",
       dataIndex: "isActive",
-      width:"120",
+      width:120,
       key: "isActive",
       render: (status,record) => (
        <>
@@ -132,7 +137,7 @@ const getAllUserData = async()=>{
     {
       title: "Created At",
       dataIndex: "createdAt",
-      width:"120",
+     width:120,
       key: "createdAt",
       render: (data,record) => (
        <>
@@ -145,18 +150,56 @@ const getAllUserData = async()=>{
        </>
       ),
     },
-  
+    {
+      title: "Visa Type",
+      dataIndex: "visaType",
+      width:120,
+      key: "visaType",
+    },
+     {
+      title: "Actions",
+      key: "actions",
+      width:120,
+      render: (record, txt) => {
+        // console.log(record, 'dddd', txt, 'asdfasdfasdfas')
+        return (
+          <>
+            <Popover
+              trigger="click"
+              content={
+                <div className="w-28">
+                   
+                    <LabelIcon
+                      icon={View}
+                      label="View"
+                     onClick={()=>{
+                      setDetailedUser({
+                        open:true,
+                        data:txt
+                      })
+                     }}
+                    />
+                </div>
+              }
+              placement="bottomLeft"
+            >
+              <img src={OptionsIcon} alt="Options" className="cursor-pointer" />
+            </Popover>
+          </>
+        );
+      },
+    },
   ];
 
   useEffect(()=>{
 getAllUserData()
   },[])
   return (
+    <>
     <Card
-      // title="Users"
       title={
         <>
-          <div>Users</div>
+          <div>Application Listing</div>
           {
             <div className="list-title">{`(Total ${
               userData?.totalRecords > 0 ? userData.totalRecords : "0"
@@ -164,17 +207,7 @@ getAllUserData()
           }
         </>
       }
-      extra={
-        <div className="flex gap-2">
-            <Btn
-              listing={true}
-              label="Add User"
-              type="primary"
-              icon={AddNew}
-              onClick={() => navigate("/users/add")}
-            />
-        </div>
-      }
+      
     >
       <CommonTable
         columns={columns}
@@ -185,6 +218,19 @@ getAllUserData()
         setSearchParams={setSearchParams}
       />
     </Card>
+    {
+      detailedUser?.open && (
+<DetailCard data={detailedUser?.data} open={detailedUser?.open}
+onCancel={()=>setDetailedUser({
+  open:false,
+  data:{}
+})}
+
+/>
+      )
+    }
+    
+    </>
   );
 };
 

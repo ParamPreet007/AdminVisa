@@ -70,7 +70,7 @@ const navigate = useNavigate()
       console.log("Form values:", values)
 
       // Simulate API call
-      const res = await signup(values)
+      const res = await signup({...values,isActive:true})
       console.log(res,'get the response of ss')
       if(res?.status ==="OK"){
       message.success("Added Succesfully")

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { api } from "./axios";
 
 export const createUserAPI = async (payload) => {
@@ -96,3 +97,37 @@ export const getAllFormSubmitUser = async () => {
     throw error.response.data;
   }
 };
+export const approveApplication = async (userId, approvedStatus, officerComment) => {
+  try {
+    const response = await api.patch(`/api/v1/application/status/${userId}`, {
+      approvedStatus,
+      officerComment,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Approval failed', error);
+    throw error;
+  }
+}
+ export const handleDownload = async () => {
+   
+
+    try {
+      const response = await axios.get('http://localhost:7000/api/v1/application/applicationDetail', {
+        responseType: 'blob', // Important for handling binary data (Excel file)
+      });
+
+      // Create a URL for the blob and trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Applications.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url); // Clean up
+    } catch (err) {
+      console.error('Download error:', err);
+    } 
+  };
