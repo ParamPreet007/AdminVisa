@@ -7,7 +7,7 @@ import LabelIcon from "../../component/LabelIcon";
 import { closePopup, setPopupProps } from "../../redux/common";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { activateUserApi, deactivateUserAPI, deleteUserAPI, getAllFormSubmitUser, getAllUsersAPI } from "../../api/userApi";
+import { activateUserApi, deactivateUserAPI, deleteUserAPI, getAllFormSubmitUser, getAllUsersAPI, handleDownload } from "../../api/userApi";
 import dayjs from "dayjs";
 import DetailCard from "./DetailUser";
 function capitalizeFirstLetter(str) {
@@ -87,6 +87,14 @@ const getAllUserData = async()=>{
     finally{
       getAllUserData()
 
+    }
+  }
+  const downloadExcel = async()=>{
+    try{
+      handleDownload()
+    }
+    catch(error){
+      console.log(error)
     }
   }
   const columns = [
@@ -207,6 +215,11 @@ getAllUserData()
           }
         </>
       }
+      extra={(<>
+      
+                <Btn type="primary" label={"Download Detail"} className={"px-2"} onClick={()=>downloadExcel()} />
+
+      </>)}
       
     >
       <CommonTable

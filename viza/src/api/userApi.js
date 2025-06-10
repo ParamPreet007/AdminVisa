@@ -116,6 +116,7 @@ export const approveApplication = async (userId, approvedStatus, officerComment)
     try {
       const response = await axios.get('http://localhost:7000/api/v1/application/applicationDetail', {
         responseType: 'blob', // Important for handling binary data (Excel file)
+        withCredentials: true, // Send cookies
       });
 
       // Create a URL for the blob and trigger download
