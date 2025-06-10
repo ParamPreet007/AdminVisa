@@ -181,18 +181,20 @@ const DetailCard = ({ data,open,onCancel }) => {
               ].map((doc, index) => (
                 <div key={index} className="group">
                   <label className="block text-sm font-medium text-gray-700 mb-3">{doc.label}</label>
-                  <div className="relative overflow-hidden rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all duration-300 bg-white shadow-sm hover:shadow-md">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${doc.bgColor} opacity-10 group-hover:opacity-20 transition-opacity`} />
-                    <img
+                  {/* <div className="relative overflow-hidden rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all duration-300 bg-white shadow-sm hover:shadow-md"> */}
+                  {/* /  <div className={`absolute inset-0 bg-gradient-to-br ${doc.bgColor} opacity-10 group-hover:opacity-20 transition-opacity`} /> */}
+                    <Image
                       src={`http://localhost:7000/uploads/${doc.image}`}
                       alt={doc.label}
-                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                      // className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                      height={300}
+                      width={300}
                       onError={(e) => {
                         e.target.src = 'https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop';
                       }}
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                  </div>
+                    {/* <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" /> */}
+                  {/* </div> */}
                 </div>
               ))}
             </div>
