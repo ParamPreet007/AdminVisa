@@ -1,4 +1,4 @@
-import { Card, message, Popover, Switch, Table } from "antd";
+import { Card, message, Popover, Switch, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import Btn from "../../component/Button";
 import { AddNew, Edit, OptionsIcon, Trash, View } from "../../assets/Images";
@@ -138,6 +138,28 @@ const getAllUserData = async()=>{
        <>
       {
         record?.user?.isActive===true?(<div className="text-green-400">Active</div>):(<div className="text-red-500">Inactive</div>)
+      }
+       </>
+      ),
+    },
+     {
+      title: "Application Status",
+      dataIndex: "status",
+      width:120,
+      key: "status",
+      render: (status,record) => (
+       <>
+      {
+        status==="approved"?(<>
+       <Tag color="green">Approved</Tag>
+        </>):
+        status==="pending"?
+       <Tag color="yellow">Pending</Tag>
+
+        
+       : (<>
+       <Tag color="red">Rejecte</Tag>
+       </>)
       }
        </>
       ),

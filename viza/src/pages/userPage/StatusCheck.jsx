@@ -23,7 +23,7 @@ export default function VisaStatusPage({open,onCancel}) {
     applicantName: "John Doe",
     visaType: "Tourist Visa",
     submissionDate: "2024-01-15",
-    status: "rejected", // Can be: "pending", "under_review", "accepted", "rejected"
+    status: "rejected", // Can be: "pending", "under_review", "approved", "rejected"
     rejectionReasons: [
       "Insufficient financial documentation",
       "Travel itinerary not detailed enough",
@@ -48,7 +48,7 @@ export default function VisaStatusPage({open,onCancel}) {
           color: "orange",
           text: "Under Review",
         }
-      case "accepted":
+      case "approved":
         return {
           current: 2,
           status: "finish",
@@ -86,15 +86,15 @@ export default function VisaStatusPage({open,onCancel}) {
       icon: <UserOutlined />,
     },
     {
-      title: applicationData?.status === "accepted" ? "Accepted" : "Decision Made",
+      title: applicationData?.status === "approved" ? "Accepted" : "Decision Made",
       description:
-        applicationData?.status === "accepted"
+        applicationData?.status === "approved"
           ? "Visa application approved"
           : applicationData.status === "rejected"
             ? "Application has been reviewed"
             : "Awaiting final decision",
       icon:
-        applicationData?.status === "accepted" ? (
+        applicationData?.status === "approved" ? (
           <CheckCircleOutlined />
         ) : applicationData?.status === "rejected" ? (
           <CloseCircleOutlined />
@@ -209,7 +209,7 @@ useEffect(()=>{
             />
           )}
 
-          {applicationData?.status === "accepted" && (
+          {applicationData?.status === "approved" && (
             <Alert
               message="Application Approved"
               description="Congratulations! Your visa application has been approved. You will receive your visa documents soon."
@@ -247,7 +247,7 @@ useEffect(()=>{
                 <br />• Decision expected within 3-5 business days
               </p>
             )}
-            {applicationData?.status === "accepted" && (
+            {applicationData?.status === "approved" && (
               <p className="text-gray-600">
                 • Your visa will be processed and mailed to you
                 <br />• Expected delivery: 3-5 business days
