@@ -133,14 +133,14 @@ const DetailCard = ({ data, open, onCancel }) => {
                       Full Name
                     </label>
                     <p className="text-lg font-semibold text-gray-900">
-                      {user.name}
+                      {user?.name}
                     </p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-1">
                       Email Address
                     </label>
-                    <p className="text-gray-800">{user.email}</p>
+                    <p className="text-gray-800">{user?.email}</p>
                   </div>
                 </div>
                 <div className="space-y-4">
@@ -148,7 +148,7 @@ const DetailCard = ({ data, open, onCancel }) => {
                     <label className="block text-sm font-medium text-gray-600 mb-1">
                       Role
                     </label>
-                    <p className="text-gray-800 capitalize">{user.role}</p>
+                    <p className="text-gray-800 capitalize">{user?.role}</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -156,12 +156,12 @@ const DetailCard = ({ data, open, onCancel }) => {
                     </label>
                     <span
                       className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${
-                        user.isActive
+                        user?.isActive
                           ? "bg-emerald-100 text-emerald-800 border-emerald-200"
                           : "bg-red-100 text-red-800 border-red-200"
                       }`}
                     >
-                      {user.isActive ? "Active" : "Inactive"}
+                      {user?.isActive ? "Active" : "Inactive"}
                     </span>
                   </div>
                 </div>
@@ -198,10 +198,10 @@ const DetailCard = ({ data, open, onCancel }) => {
                     Application Status
                   </label>
                   <span
-                    className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium border ${statusConfig[status].color}`}
+                    className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium border ${statusConfig?.[status]?.color}`}
                   >
                     <StatusIcon className="w-4 h-4" />
-                    <span>{statusConfig[status].label}</span>
+                    <span>{statusConfig?.[status]?.label}</span>
                   </span>
                 </div>
                 <div className="md:col-span-2 lg:col-span-1">
@@ -264,13 +264,13 @@ const DetailCard = ({ data, open, onCancel }) => {
                 ].map((doc, index) => (
                   <div key={index} className="group">
                     <label className="block text-sm font-medium text-gray-700 mb-3">
-                      {doc.label}
+                      {doc?.label}
                     </label>
                     {/* <div className="relative overflow-hidden rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all duration-300 bg-white shadow-sm hover:shadow-md"> */}
                     {/* /  <div className={`absolute inset-0 bg-gradient-to-br ${doc.bgColor} opacity-10 group-hover:opacity-20 transition-opacity`} /> */}
                     <Image
-                      src={`http://localhost:7000/uploads/${doc.image}`}
-                      alt={doc.label}
+                      src={`http://localhost:7000/uploads/${doc?.image}`}
+                      alt={doc?.label}
                       // className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                       height={300}
                       width={300}
@@ -284,7 +284,10 @@ const DetailCard = ({ data, open, onCancel }) => {
                   </div>
                 ))}
               </div>
-              <div className="flex gap-2 justify-end mt-2 ">
+              {
+                status==="pending" && (
+                  <>
+                    <div className="flex gap-2 justify-end mt-2 ">
                 <button
                   className="px-3 py-2  text-white bg-red-700 rounded-[18px] cursor-pointer"
                   onClick={() => {
@@ -302,6 +305,10 @@ const DetailCard = ({ data, open, onCancel }) => {
                   Approved 
                 </button>
               </div>
+                  </>
+                )
+              }
+            
             </div>
           </div>
         </div>

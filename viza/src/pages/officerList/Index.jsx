@@ -194,8 +194,10 @@ const getAllUserData = async()=>{
         // console.log(record, 'dddd', txt, 'asdfasdfasdfas')
         return (
           <>
-            <Popover
-              trigger="click"
+          {
+            txt?.user?.email?.length && (<>
+             <Popover
+              trigger="hover"
               content={
                 <div className="w-28">
                    
@@ -215,6 +217,10 @@ const getAllUserData = async()=>{
             >
               <img src={OptionsIcon} alt="Options" className="cursor-pointer" />
             </Popover>
+            
+            </>)
+          }
+           
           </>
         );
       },

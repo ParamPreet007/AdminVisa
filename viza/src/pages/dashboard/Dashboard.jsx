@@ -14,18 +14,20 @@ import {
   CartesianGrid,
 } from "recharts"
 import { UserOutlined, FileTextOutlined, TeamOutlined, CalendarOutlined } from "@ant-design/icons"
+import {  useEffect, useState } from "react"
+import { currentMonthDataAPI, getAllUserStatusApi, totalApplicationSubmitRejectAPI, totalOfficerApi } from "../../api/dashboardApi"
 
 const { Title } = Typography
 
-const userStatusData = [
-  { name: "Active Users", value: 1250, color: "#52c41a" },
-  { name: "Inactive Users", value: 350, color: "#ff4d4f" },
-]
+// const userStatusData = [
+//   { name: "Active Users", value: 1250, color: "#52c41a" },
+//   { name: "Inactive Users", value: 350, color: "#ff4d4f" },
+// ]
 
-const applicationStatusData = [
-  { name: "Submitted", value: 890 },
-  { name: "Rejected", value: 210 },
-]
+// const applicationStatusData = [
+//   { name: "Submitted", value: 890 },
+//   { name: "Pending", value: 210 },
+// ]
 
 const monthlyApplications2025 = [
   { month: "Jan", applications: 45 },
@@ -37,9 +39,57 @@ const monthlyApplications2025 = [
 ]
 
 export default function Dashboard() {
-  const totalOfficers = 25
-  const total2025Applications = monthlyApplications2025.reduce((sum, item) => sum + item.applications, 0)
+  // const totalOfficers = 25
+  const [userStatusData,setUserStatusData] = useState([])
+  const [applicationStatusData,setApplicationStatusData] = useState([])
+  const getStatusDetail = async ()=>{
+    try{
+      const res = await getAllUserStatusApi()
+      setUserStatusData(res?.data || [])
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+  const getApplicationSubmitRejected  = async () =>{
+    try{
+      const res = await totalApplicationSubmitRejectAPI()
+      setApplicationStatusData(res?.data||[])
+      console.log(res,'getting the repossss')
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+  const [totalOfficers,setTotalOfficer] = useState(0)
+  const getOfficer = async () =>{
+    try{
+      const res =await totalOfficerApi()
+      setTotalOfficer(res?.totalOfficers||0)
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+  const [monthlyApplications2025,setMonthlyApplications2025] = useState([])
+  const [total2025Applications,setTotal2025Applications] = useState(0)
 
+  const getCurrentmonthDataGet = async ()=>{
+    try{
+      const res = await currentMonthDataAPI()
+      setMonthlyApplications2025(res?.data ||[])
+      setTotal2025Applications(res?.data?.reduce((sum, item) => sum + item.applications, 0))
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+useEffect(()=>{
+getStatusDetail()
+getApplicationSubmitRejected()
+getOfficer()
+getCurrentmonthDataGet()
+},[])
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
@@ -63,7 +113,7 @@ export default function Dashboard() {
             <Card className="text-center shadow-md hover:shadow-lg transition-shadow">
               <Statistic
                 title="Applications Submitted"
-                value={applicationStatusData[0].value}
+                value={applicationStatusData?.[0]?.value}
                 prefix={<FileTextOutlined className="text-green-500" />}
                 valueStyle={{ color: "#52c41a" }}
               />
@@ -73,10 +123,10 @@ export default function Dashboard() {
           <Col xs={24} sm={12} lg={6}>
             <Card className="text-center shadow-md hover:shadow-lg transition-shadow">
               <Statistic
-                title="Applications Rejected"
-                value={applicationStatusData[1].value}
-                prefix={<FileTextOutlined className="text-red-500" />}
-                valueStyle={{ color: "#ff4d4f" }}
+                title="Applications Pending"
+                value={applicationStatusData?.[1]?.value}
+                prefix={<FileTextOutlined className="text-yellow-500" />}
+                valueStyle={{ color: "#e8df2a" }}
               />
             </Card>
           </Col>
@@ -84,10 +134,10 @@ export default function Dashboard() {
           <Col xs={24} sm={12} lg={6}>
             <Card className="text-center shadow-md hover:shadow-lg transition-shadow">
               <Statistic
-                title="2025 Applications"
-                value={total2025Applications}
-                prefix={<CalendarOutlined className="text-purple-500" />}
-                valueStyle={{ color: "#722ed1" }}
+                title="Applications Rejected"
+                value={applicationStatusData?.[2]?.value}
+                prefix={<FileTextOutlined className="text-red-500" />}
+                valueStyle={{ color: "#f2070f" }}
               />
             </Card>
           </Col>
@@ -116,8 +166,8 @@ export default function Dashboard() {
                     fill="#8884d8"
                     dataKey="value"
                   >
-                    {userStatusData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    {userStatusData?.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry?.color} />
                     ))}
                   </Pie>
                   <Tooltip formatter={(value) => [value, "Users"]} />
@@ -128,7 +178,7 @@ export default function Dashboard() {
                 <p className="text-gray-600">
                   Total Users:{" "}
                   <span className="font-semibold text-blue-600">
-                    {userStatusData.reduce((sum, item) => sum + item.value, 0)}
+                    {userStatusData?.reduce((sum, item) => sum + item.value, 0)}
                   </span>
                 </p>
               </div>
@@ -180,12 +230,12 @@ export default function Dashboard() {
               <Row gutter={[16, 16]} className="text-center">
                 <Col xs={24} sm={8}>
                   <div className="p-4 bg-green-50 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">{applicationStatusData[0].value}</div>
+                    <div className="text-2xl font-bold text-green-600">{applicationStatusData?.[0]?.value}</div>
                     <div className="text-green-700">Submitted</div>
                     <div className="text-sm text-gray-500 mt-1">
                       {(
-                        (applicationStatusData[0].value /
-                          (applicationStatusData[0].value + applicationStatusData[1].value)) *
+                        (applicationStatusData?.[0]?.value /
+                          (applicationStatusData?.[0]?.value + applicationStatusData?.[1]?.value)) *
                         100
                       ).toFixed(1)}
                       % Success Rate
@@ -193,13 +243,13 @@ export default function Dashboard() {
                   </div>
                 </Col>
                 <Col xs={24} sm={8}>
-                  <div className="p-4 bg-red-50 rounded-lg">
-                    <div className="text-2xl font-bold text-red-600">{applicationStatusData[1].value}</div>
-                    <div className="text-red-700">Rejected</div>
+                  <div className="p-4 bg-yellow-50 rounded-lg">
+                    <div className="text-2xl font-bold text-yellow-600">{applicationStatusData?.[1]?.value}</div>
+                    <div className="text-yellow-700">Pending</div>
                     <div className="text-sm text-gray-500 mt-1">
                       {(
-                        (applicationStatusData[1].value /
-                          (applicationStatusData[0].value + applicationStatusData[1].value)) *
+                        (applicationStatusData?.[1]?.value /
+                          (applicationStatusData?.[0]?.value + applicationStatusData?.[1]?.value)) *
                         100
                       ).toFixed(1)}
                       % Rejection Rate
@@ -209,7 +259,7 @@ export default function Dashboard() {
                 <Col xs={24} sm={8}>
                   <div className="p-4 bg-blue-50 rounded-lg">
                     <div className="text-2xl font-bold text-blue-600">
-                      {applicationStatusData[0].value + applicationStatusData[1].value}
+                      {applicationStatusData?.[0]?.value + applicationStatusData?.[1]?.value}
                     </div>
                     <div className="text-blue-700">Total Processed</div>
                     <div className="text-sm text-gray-500 mt-1">All Applications</div>
