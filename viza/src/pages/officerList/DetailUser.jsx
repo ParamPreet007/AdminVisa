@@ -69,7 +69,6 @@ const DetailCard = ({ data, open, onCancel }) => {
       console.log(error);
     } finally {
       setLoading(false);
-
       onCancel();
     }
   };
@@ -91,7 +90,6 @@ const DetailCard = ({ data, open, onCancel }) => {
         commentData: "",
       });
       setLoading(false);
-
       onCancel();
     }
   };

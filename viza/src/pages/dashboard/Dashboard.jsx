@@ -112,7 +112,7 @@ getCurrentmonthDataGet()
           <Col xs={24} sm={12} lg={6}>
             <Card className="text-center shadow-md hover:shadow-lg transition-shadow">
               <Statistic
-                title="Applications Submitted"
+                title="Applications Approved"
                 value={applicationStatusData?.[0]?.value}
                 prefix={<FileTextOutlined className="text-green-500" />}
                 valueStyle={{ color: "#52c41a" }}
