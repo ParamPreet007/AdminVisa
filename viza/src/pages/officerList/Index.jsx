@@ -158,7 +158,7 @@ const getAllUserData = async()=>{
 
         
        : (<>
-       <Tag color="red">Rejecte</Tag>
+       <Tag color="red">Rejected</Tag>
        </>)
       }
        </>
