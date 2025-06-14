@@ -1,19 +1,21 @@
-"use client"
+
 
 import { Card, Form, Input, Select, Button, message } from "antd"
-import { createUserAPI } from "../../api/userApi"
-import { useNavigate } from "react-router-dom"
+import { createUserAPI, editUserApi, getUserDetailInAdd } from "../../api/userApi"
+import { useNavigate, useParams } from "react-router-dom"
 import Btn from "../../component/Button"
+import { useEffect } from "react"
 
 const { Option } = Select
 
 const Add = () => {
+  const {id} = useParams()
   const navigate = useNavigate()
   const [form] = Form.useForm()
 
   const onFinish = async(values) => {
     try{
-const res = await createUserAPI({...values,isActive:true})
+const res = id?await editUserApi(id,values) : await createUserAPI({...values,isActive:true})
 if(res?.status==="OK"){
   navigate("/users")
   message.success(res?.message)
@@ -26,11 +28,35 @@ if(res?.status==="OK"){
   }
 
   const onFinishFailed = (errorInfo) => {
-    message.error("Please check the form fields")
+    message.error("Please check the form ")
   }
 
+  const getUserData  = async () =>{
+    try{
+      const res = await getUserDetailInAdd(id)
+      const Response = res?.user
+            console.log(res?.user,'get the response of user here ')
+
+      form.setFieldsValue({
+        name:Response?.name,
+        role:Response?.role,
+        email:Response?.email
+      })
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+
+
+  useEffect(()=>{
+if(id){
+  getUserData()
+}
+  },[id])
+
   return (
-    <Card title="Add User" style={{ maxWidth: 800, margin: "0 " }}>
+    <Card title={id?"Edit User":"Add User" } style={{ maxWidth: 800, margin: "0 " }}>
       <Form
         form={form}
         name="addUser"
@@ -69,9 +95,9 @@ if(res?.status==="OK"){
             <Option value="admin">Admin</Option>
           </Select>
         </Form.Item>
-
-        <Form.Item>
-           <Form.Item
+        {
+          !id && (
+  <Form.Item
           label="Password"
           name="password"
           rules={[
@@ -82,9 +108,14 @@ if(res?.status==="OK"){
         >
           <Input placeholder="Enter Password" />
         </Form.Item>
+          )
+        }
+
+        <Form.Item>
+         
             <div className="flex gap-2 items-center">
           <Btn type="subPrimary" label={"Reset"} className={"px-2"} onClick={()=>form.resetFields()} />
-           <Btn label={"Add User"} type="primary" htmlType="submit" />
+           <Btn label={id?"Edit User":"Add User"} type="primary" htmlType="submit" />
             </div>
          
         </Form.Item>

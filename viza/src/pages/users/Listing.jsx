@@ -145,11 +145,11 @@ const getAllUserData = async()=>{
               trigger="click"
               content={
                 <div className="w-28">
-                    {/* <LabelIcon
+                    <LabelIcon
                       icon={Edit}
                       label="Edit"
-                      onClick={() => navigate("/user/edit/" + record?._id)}
-                    /> */}
+                      onClick={() => navigate("/users/edit/" + record?._id)}
+                    />
                     <LabelIcon
                       icon={Trash}
                       label="Delete"

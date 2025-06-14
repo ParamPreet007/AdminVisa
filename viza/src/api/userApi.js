@@ -132,3 +132,31 @@ export const approveApplication = async (userId, approvedStatus, officerComment)
       console.error('Download error:', err);
     } 
   };
+
+  export const getUserDetailInAdd =async(userId)=>{
+   try {
+    const response = await api.get(`/api/v1/auth/detailUser/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }  
+}
+
+
+
+export const editUserApi = async (id,payload) => {
+  try {
+    const response = await api.put('/api/v1/auth/editUser/'+id,payload);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+export const deactiveAndRejected = async (id) => {
+  try {
+    const response = await api.put('/api/v1/application/accountDeactiveRejected/'+id);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

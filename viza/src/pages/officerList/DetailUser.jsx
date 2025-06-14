@@ -13,7 +13,7 @@ import {
   XCircle,
 } from "lucide-react";
 import Btn from "../../component/Button";
-import { approveApplication } from "../../api/userApi";
+import { approveApplication, deactiveAndRejected } from "../../api/userApi";
 import CommonInput from "../../component/CommonInput";
 
 const DetailCard = ({ data, open, onCancel }) => {
@@ -72,6 +72,21 @@ const DetailCard = ({ data, open, onCancel }) => {
       onCancel();
     }
   };
+  const fraudDetect =async()=>{
+    try{
+      setLoading(true)
+      const res = await deactiveAndRejected(data?.user?._id)
+              message.success("Account has deactivated!");
+
+    }
+    catch(error){
+      console.log(error)
+    }
+    finally {
+      setLoading(false);
+      onCancel();
+    }
+  }
   const rejectedForm = async (status) => {
     try {
       setLoading(true);
@@ -329,7 +344,7 @@ const DetailCard = ({ data, open, onCancel }) => {
                           });
                         }}
                       >
-                        Rejected
+                        {loading?"Loading...":"Rejected"}
                       </button>
                       <button
                         className="px-3 py-2  text-white bg-green-700 rounded-[18px] cursor-pointer"
@@ -338,6 +353,14 @@ const DetailCard = ({ data, open, onCancel }) => {
                         }}
                       >
                         {loading?"Loading....":"Accepted"}
+                      </button>
+                       <button
+                        className="px-3 py-2  text-white bg-yellow-700 rounded-[18px] cursor-pointer"
+                        onClick={() => {
+                          fraudDetect("approved");
+                        }}
+                      >
+                        {loading?"Loading....":"Fraud Detect" }
                       </button>
                     </div>
                   </>
