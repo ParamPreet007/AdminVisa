@@ -84,9 +84,9 @@ export const VerifyOtp = ({ otpSection }) => {
   };
 
   const handleSubmit = async () => {
-  let newValue = [...otp]; // ✅ makes a shallow copy of otp array
+  let newValue = otp; // ✅ makes a shallow copy of otp array
 
-  const otpValue = newValue.join("");
+  const otpValue = newValue
   if (otpValue.length !== 6) {
     message.error("Please enter complete OTP");
     return;
@@ -94,15 +94,13 @@ export const VerifyOtp = ({ otpSection }) => {
     setLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      message.success("OTP verified successfully!");
-      console.log("OTP verified:", otp);
       // navigate("/dashboard");
     } catch (error) {
       console.error("OTP verification failed:", error);
       message.error("OTP verification failed. Please try again.");
     } finally {
       setLoading(false);
-            otpSection(otp);
+            otpSection(otp.join(''));
 
     }
   };

@@ -18,7 +18,6 @@ const AuthForgot = () => {
     setLoading(true);
     try {
         let res = await forgetPassword(values, { message: true });
-        console.log(res,'get response hereeee')
         // localStorage.setItem("forgetToken", res?.data?.data?.token)
         // if (res?.status === 200) {
           setIsReset({

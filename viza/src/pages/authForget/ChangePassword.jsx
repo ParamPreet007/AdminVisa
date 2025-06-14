@@ -80,6 +80,7 @@ const ChangePassword = (props) => {
 navigate("/login")
      
     } catch (error) {
+      message.error(error?.message)
       console.error("Password change error:", error)
     } finally {
       setLoading(false)
