@@ -9,12 +9,12 @@ import CommonButton from "../../component/CommonButton"
 import "../../style/Login.css"
 import { LeftSideContent } from "../../component/LeftSideContent"
 
-const ForgetPassword = () => {
+const ForgetPassword = (props) => {
   const [form] = Form.useForm()
-  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
   })
+  const { forgotPassword, loading } = props
 
   // Animation variants
   const containerVariants = {
@@ -60,14 +60,13 @@ const ForgetPassword = () => {
   // Form submission
   const handleSubmit = async (values) => {
     // try {
-      setLoading(true)
+    
 
-      console.log("Form values:", values)
-
+  await form.validateFields()
+    forgotPassword(values)
       // Simulate API call
       // await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      message.success("Login successful!")
 
    
   }

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import  ForgetPassword  from "./ForgetPassword";
-import { ChangePassword } from "./ChangePassword";
+import  ChangePassword  from "./ChangePassword";
 import { VerifyOtp } from "./VerifyOtp";
+import { forgetPassword } from "../../api/authApi";
 
 
 const AuthForgot = () => {
-  const [errorCount, setErrorCount] = useState(0);
   const [isReset, setIsReset] = useState({
     resetComp: false,
   });
@@ -17,18 +17,17 @@ const AuthForgot = () => {
   const forgotPasswordHandler = async (values) => {
     setLoading(true);
     try {
-      // if (errorCount < MaxCount?.maxCount) {
-        // let res = await forgetPasswordAPI(values, { message: true });
+        let res = await forgetPassword(values, { message: true });
+        console.log(res,'get response hereeee')
         // localStorage.setItem("forgetToken", res?.data?.data?.token)
         // if (res?.status === 200) {
-        //   setIsReset({
-        //     resetComp: true,
-        //   })
+          setIsReset({
+            resetComp: true,
+          })
         // }
-      // }
+      
 
     } catch (error) {
-      setErrorCount((prev) => prev + 1)
     } finally {
       setLoading(false);
     }
@@ -36,21 +35,13 @@ const AuthForgot = () => {
   const otpSection = async (otp) => {
     try {
       let forgetToken
-      if (localStorage.getItem("resendOtp")) {
-        forgetToken = localStorage.getItem("resendOtp")
-      }
-      else {
-        forgetToken = localStorage.getItem("forgetToken")
-      }
-      let finalPayload = {
-        otp,
-        token: forgetToken
-      }
+      localStorage.setItem("otp",otp)
+      
       setLoading(true);
       // const res = await verifyOtpAPI(finalPayload, { message: true });
 
       // if (res?.status === 200) {
-      //   setIsOtp({ resetOtp: true })
+        setIsOtp({ resetOtp: true })
       //   localStorage.setItem("changePassword", res?.data?.data?.token)
       //   localStorage.setItem("otp", otp)
 

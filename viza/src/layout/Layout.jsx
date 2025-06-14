@@ -23,7 +23,13 @@ const AppLayout = () => {
   const [slectedMenu, setSlectedMenu] = useState([""]);
   const [slectedSubMenu, setSlectedSubMenu] = useState([""]);
   const { authLogin } = useSelector((value) => value);
-
+  const role = localStorage.getItem("role"); // e.g., "admin" or "officer"
+  const filteredRoutes =
+    role === "admin"
+      ? routes
+      : routes.filter((route) => route.path.includes("Officer"));
+  const filteredMenus =
+    role === "admin" ? menus : menus.filter((menu) => menu.key === "Officer");
   useEffect(() => {
     setSlectedMenu([location?.pathname?.split("/")?.[1]]);
     setSlectedSubMenu([location?.pathname?.split("/")?.[2] || ""]);
@@ -45,25 +51,20 @@ const AppLayout = () => {
             backgroundColor: "var(--primary)",
           }}
         >
-            <div
+          <div
             className="flex font-semibold text-base  h-12  border-r  bg-[var(--headerbg)]"
             style={{
               position: "fixed",
               zIndex: 100,
               top: 0,
-              width: '241px'
+              width: "241px",
             }}
           >
-            
-              
-                <div className="ml-2 w-48 h-12 text-white flex items-center justify-center text-3xl">
-                  VIZA VERIFY
-                </div>
-              
-             
-            
+            <div className="ml-2 w-48 h-12 text-white flex items-center justify-center text-3xl">
+              VIZA VERIFY
+            </div>
           </div>
-        
+
           <Menu
             className=" m-0 p-2 text-xs mt-12"
             style={{
@@ -72,7 +73,7 @@ const AppLayout = () => {
             theme="light"
             mode="inline"
           >
-            {menus.map(({ key, Icon, child, name, auth }) => {
+            {filteredMenus.map(({ key, Icon, child, name, auth }) => {
               return child?.length ? (
                 <SubMenu
                   key={"child" + key}
@@ -113,32 +114,32 @@ const AppLayout = () => {
                           : "var(--primary)",
                       }}
                     >
-                        <div
-                          className="ml-1"
-                          style={{
-                            color: slectedSubMenu.includes(Element.key)
-                              ? "var(--primary)"
-                              : "#ffffff",
-                          }}
-                        >
-                          <div className="flex">
-                            <div
-                              style={{ fontWeight: "800", fontSize: "20px" }}
-                              className="flex justify-center' items-center"
-                            >
-                              <DotIcon
-                                fill={
-                                  slectedSubMenu.includes(Element.key)
-                                    ? "var(--primary)"
-                                    : "white"
-                                }
-                              />
-                            </div>
-                            <div className="ml-2 flex items-end justify-end">
-                              {Element.name}
-                            </div>
+                      <div
+                        className="ml-1"
+                        style={{
+                          color: slectedSubMenu.includes(Element.key)
+                            ? "var(--primary)"
+                            : "#ffffff",
+                        }}
+                      >
+                        <div className="flex">
+                          <div
+                            style={{ fontWeight: "800", fontSize: "20px" }}
+                            className="flex justify-center' items-center"
+                          >
+                            <DotIcon
+                              fill={
+                                slectedSubMenu.includes(Element.key)
+                                  ? "var(--primary)"
+                                  : "white"
+                              }
+                            />
+                          </div>
+                          <div className="ml-2 flex items-end justify-end">
+                            {Element.name}
                           </div>
                         </div>
+                      </div>
                     </Link>
                   ))}
                 </SubMenu>
@@ -147,8 +148,9 @@ const AppLayout = () => {
                 <Link
                   key={`/${key}`}
                   to={`/${key}`}
-                  className={`flex items-center my-2  py-2 px-3 gap-2 rounded  ${ slectedMenu.includes(key) ? "bg-white" : "bg-transparent"} `}
-                 
+                  className={`flex items-center my-2  py-2 px-3 gap-2 rounded  ${
+                    slectedMenu.includes(key) ? "bg-white" : "bg-transparent"
+                  } `}
                 >
                   <div>
                     <Icon
@@ -156,9 +158,9 @@ const AppLayout = () => {
                     />
                   </div>
                   <div
-                  className="font-bold text-[15px]"
+                    className="font-bold text-[15px]"
                     style={{
-                      color: slectedMenu?.includes(key)?"#737375":"#fffff",
+                      color: slectedMenu?.includes(key) ? "#737375" : "#fffff",
                     }}
                   >
                     {name}
@@ -175,7 +177,7 @@ const AppLayout = () => {
             style={{ margin: 0, minHeight: 280 }}
           >
             <Routes>
-              {routes.map(({ path, Element }) => (
+              {filteredRoutes.map(({ path, Element }) => (
                 <Route
                   key={path}
                   path={path}
@@ -185,7 +187,7 @@ const AppLayout = () => {
             </Routes>
           </Content>
         </Layout>
-        <Popup/>
+        <Popup />
       </Layout>
     </Layout>
   );

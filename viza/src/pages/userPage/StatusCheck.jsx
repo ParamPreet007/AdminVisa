@@ -12,7 +12,7 @@ import { getUserStatusActiveAPI } from "../../api/userApi"
 
 const { Step } = Steps
 
-export default function VisaStatusPage({open,onCancel}) {
+export default function VisaStatusPage({open,onCancel,res}) {
 
   const[statusInfo,setStatusInfo] = useState("")
   const [showRejectionModal, setShowRejectionModal] = useState(false)
@@ -107,8 +107,8 @@ export default function VisaStatusPage({open,onCancel}) {
 
   const getStatus = async()=>{
     try{
-      const id = localStorage.getItem("token")
-      const res = await getUserStatusActiveAPI(id)
+      // const id = localStorage.getItem("token")
+      // const res = await getUserStatusActiveAPI(id)
       if(res?.userDetails?.length){
           const data =   getStatusInfo(res?.userDetails?.[0]?.status||{})
       setStatusInfo(data||{})

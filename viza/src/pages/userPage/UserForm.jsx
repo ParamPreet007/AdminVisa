@@ -17,6 +17,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import { submitUserFormAPi } from "../../api/userApi";
+import { chooseState } from "../../utils/constant";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -368,7 +369,18 @@ export const UserForm = ({ open, onCancel }) => {
                    
                   ]}
                 >
-                  <Input placeholder="Enter your mother's name" />
+                  {/* <Input placeholder="Enter your mother's name" /> */}
+                   <Select placeholder="Select your State">
+                   {
+                    chooseState?.map((item)=>{
+                      return (
+                        <>
+                        <Option value={item?.value}>{item?.value}</Option>
+                        </>
+                      )
+                    })
+                   }
+                  </Select>
                 </Form.Item>
               </Col>
             </Row>
