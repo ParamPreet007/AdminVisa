@@ -65,34 +65,37 @@ const navigate = useNavigate()
   }
 
   // Form submission
-  const handleSubmit = async (values) => {
-    try {
-      setLoading(true)
+ const handleSubmit = async (values) => {
+  try {
+    setLoading(true);
+    const res = await loginApi(values);
+    console.log(res, 'get login response');
 
+    if (res?.status === "OK") {
+      message.success("Login successful!");
 
-      // Simulate API call
-      // await new Promise((resolve) => setTimeout(resolve, 2000))
-      
-      const res = await loginApi(values)
+      // Save token and role to localStorage
+      localStorage.setItem("token", res?.userID);
+      localStorage.setItem("role", res?.role);  // <-- Save role
 
-      console.log(res,'get login response  ')
-      if(res?.status==="OK"){
-      message.success("Login successful!")
-        localStorage.setItem("token",res?.userID)
-        
-      navigate("/users")
+      dispatch(setLogin());
+
+      // Redirect based on role
+      if (res?.role === "user") {
+        navigate("/user-page");
+      } else if (res?.role === "officer" || res?.role === "admin") {
+        navigate("/");  // default layout route
+      } else {
+        message.error("Unknown role!");
       }
-
-      // Here you would typically handle the login logic
-      // navigate to dashboard or handle authentication
-    } catch (error) {
-      console.error("Login error:", error)
-      message.error(error?.message)
-    } finally {
-      setLoading(false)
-      dispatch(setLogin())
     }
+  } catch (error) {
+    console.error("Login error:", error);
+    message.error(error?.message || "Login failed");
+  } finally {
+    setLoading(false);
   }
+};
 
 
   const valildateEmailLogin = (_, value) => {
@@ -107,8 +110,14 @@ const navigate = useNavigate()
   }
     useEffect(() => {
     if (localStorage.getItem("token")) {
+      let userGet = localStorage.getItem("role") 
+      if(userGet==="user"){
+         navigate("/user-page");
+      }
+      else{
       navigate("/users");
-    }
+      }
+      }
   }, []);
 
   return (
