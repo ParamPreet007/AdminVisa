@@ -276,15 +276,17 @@ useEffect(()=>{
           ]}
         >
           <div className="space-y-4">
-            <Alert message="Your application was rejected for the following reasons:" type="error" showIcon />
-            <div className="space-y-2">
-              {/* {applicationData.rejectionReasons.map((reason, index) => (
-                <div key={index} className="flex items-start gap-2">
-                  <CloseCircleOutlined className="text-red-500 mt-1" />
-                  <span>{reason}</span>
-                </div>
-              ))} */}
-            </div>
+            <Alert message="Your application was rejected for the following reason:" type="error" showIcon />
+              {
+                applicationData?.notes && (
+                  <>
+                   <Alert message= {applicationData?.notes} type="error" showIcon />
+                 
+
+                  </>
+                )
+              }
+             
             <div className="bg-blue-50 p-4 rounded-lg">
               <h4 className="font-semibold text-blue-900 mb-2">Next Steps:</h4>
               <p className="text-blue-800 text-sm">

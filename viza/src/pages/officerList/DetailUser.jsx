@@ -32,6 +32,8 @@ const DetailCard = ({ data, open, onCancel }) => {
   } = data;
 
   const [loading, setLoading] = useState(false);
+  const[approveLoading,setApproveLoading] = useState(false)
+  const[fraudLoading,setFraudLoading] = useState(false)
 
   const statusConfig = {
     pending: {
@@ -58,7 +60,7 @@ const DetailCard = ({ data, open, onCancel }) => {
 
   const acceptedForm = async (status) => {
     try {
-      setLoading(true);
+      setApproveLoading(true);
       const res = await approveApplication(
         data?.user?._id,
         status,
@@ -68,13 +70,13 @@ const DetailCard = ({ data, open, onCancel }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      setApproveLoading(false);
       onCancel();
     }
   };
   const fraudDetect =async()=>{
     try{
-      setLoading(true)
+      setFraudLoading(true)
       const res = await deactiveAndRejected(data?.user?._id)
               message.success("Account has deactivated!");
 
@@ -83,7 +85,7 @@ const DetailCard = ({ data, open, onCancel }) => {
       console.log(error)
     }
     finally {
-      setLoading(false);
+      setFraudLoading(false);
       onCancel();
     }
   }
@@ -344,7 +346,7 @@ const DetailCard = ({ data, open, onCancel }) => {
                           });
                         }}
                       >
-                        {loading?"Loading...":"Rejected"}
+                       Rejected
                       </button>
                       <button
                         className="px-3 py-2  text-white bg-green-700 rounded-[18px] cursor-pointer"
@@ -352,7 +354,7 @@ const DetailCard = ({ data, open, onCancel }) => {
                           acceptedForm("approved");
                         }}
                       >
-                        {loading?"Loading....":"Accepted"}
+                        {approveLoading?"Loading....":"Accepted"}
                       </button>
                        <button
                         className="px-3 py-2  text-white bg-yellow-700 rounded-[18px] cursor-pointer"
@@ -360,7 +362,7 @@ const DetailCard = ({ data, open, onCancel }) => {
                           fraudDetect("approved");
                         }}
                       >
-                        {loading?"Loading....":"Fraud Detect" }
+                        {fraudLoading?"Loading....":"Fraud Detect" }
                       </button>
                     </div>
                   </>
