@@ -17,6 +17,8 @@ function capitalizeFirstLetter(str) {
 const Listing = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [statusActive,setStatusActive] = useState(false)
+
   const { popupProps } = useSelector((state) => state);
 const getAllUserData = async()=>{
   try{
@@ -127,6 +129,7 @@ const getAllUserData = async()=>{
         else{
           activateUser(record?._id)
         }
+        setStatusActive(e)
        }} />
        </>
       ),

@@ -76,7 +76,7 @@ const ChangePassword = (props) => {
 
       const otp = localStorage.getItem("otp")
       const res = await resetPassword(otp,{password:formData?.confirmPassword})
-      
+      message.success("Password updated Successfully  ")
 navigate("/login")
      
     } catch (error) {
