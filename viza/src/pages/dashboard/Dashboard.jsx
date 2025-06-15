@@ -231,7 +231,7 @@ getCurrentmonthDataGet()
                 <Col xs={24} sm={8}>
                   <div className="p-4 bg-green-50 rounded-lg">
                     <div className="text-2xl font-bold text-green-600">{applicationStatusData?.[0]?.value}</div>
-                    <div className="text-green-700">Submitted</div>
+                    <div className="text-green-700">Approved</div>
                     <div className="text-sm text-gray-500 mt-1">
                       {(
                         (applicationStatusData?.[0]?.value /
